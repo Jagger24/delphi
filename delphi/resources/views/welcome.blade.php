@@ -61,6 +61,20 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+            #join-session{
+                margin-top:25px;
+                padding: 25px;
+                border: 2px solid black;
+                border-radius: 20px;
+            }
+
+            .join-form{
+                font-size:20px;
+                font-weight:500;
+            }
+            /*.disclaimer-text{
+                margin-bottom:3px;
+            }*/
         </style>
     </head>
     <body>
@@ -86,13 +100,24 @@
 
                 <div class="links">
                     <a href="{{ route('about') }}">About Delphi</a>
-                    <a href="https://laracasts.com">Log In</a>
-                    <a href="https://laravel-news.com">Sign Up</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    @guest
+                        <a href="{{ route('login') }}">{{ __('Login') }}</a>
+                        <a href="{{ route('register') }}">{{ __('Register') }}</a>
+                    @endif
                 </div>
+
+                
+                <form id="join-session">
+
+                    <div class="join-form">
+                        <div class="disclaimer-text"><strong>No reason to sign up! Start voting now:</strong> </div>
+                        <br />
+                        Enter Join Code: 
+                        <input type="text" name="code">
+                        <input type="submit" value="Submit">
+                    </div>
+
+                </form
             </div>
         </div>
     </body>
