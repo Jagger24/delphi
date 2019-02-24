@@ -113,7 +113,7 @@
                         <div class="disclaimer-text"><strong>No reason to sign up! Start voting now:</strong> </div>
                         <br />
                         Enter Join Code: 
-                        <input type="text" name="code">
+                        <input type="text" name="code" required>
                         <input type="submit" value="Submit">
                     </div>
 

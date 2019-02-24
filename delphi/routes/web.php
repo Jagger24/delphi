@@ -19,6 +19,12 @@ Route::get('/about', 'PageController@about')->name('about');
 Route::get('/contact','PageController@contact')->name('contact');
 Route::post('/contact','PageController@submitContact');
 
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//ROUTES ABOUT LISTS AND SESSIONS ETC:
+
+Route::post('/home', 'SessionController@store')->name('sessionStore');
+Route::get('user/{sessionCode}/create', 'HomeController@newList');
