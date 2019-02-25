@@ -41,7 +41,7 @@ class HomeController extends Controller
     public function newList($code){
         $session = Session::getIdByUserIdAndCode(Auth::user()->id, $code);
         if($session == null){
-            return view('newList',['errorMessage'=>'You do not have own this code or the code does not exist    CODE: ']);
+            return view('newList',['errorMessage'=>'You do not have own this code or the code does not exist    CODE: ', 'code'=>$code]);
         }
         return view('newList',['code'=>$code]);
     }

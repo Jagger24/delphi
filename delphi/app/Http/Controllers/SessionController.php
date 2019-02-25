@@ -45,7 +45,7 @@ class SessionController extends Controller
 	        $session->code = $request->request->get("joinCode");
 
 	        if($session->save()){
-	        	return view('home');
+	        	return redirect()->action('HomeController@index');
 	        }else{
 	        	$errorMessage="2";
 	        }
@@ -53,5 +53,9 @@ class SessionController extends Controller
 
     	// return view('home',['errorMessage'=>$errorMessage]);
     	return redirect()->action('HomeController@index',['errorMessage'=>$errorMessage]);
+    }
+
+    public function createListWithOptions(Request $request){
+    	
     }
 }

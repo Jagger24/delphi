@@ -27,4 +27,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 //ROUTES ABOUT LISTS AND SESSIONS ETC:
 
 Route::post('/home', 'SessionController@store')->name('sessionStore');
+
+
+Route::post('user/{sessionCode}/create', 'SessionController@createListWithOptions')->name('newList');
 Route::get('user/{sessionCode}/create', 'HomeController@newList');
