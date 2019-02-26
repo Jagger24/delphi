@@ -107,7 +107,7 @@
                 </div>
 
                 
-                <form id="join-session">
+                <form id="join-session" action="{{ route('check') }}" method="POST">
 
                     <div class="join-form">
                         <div class="disclaimer-text"><strong>No reason to sign up! Start voting now:</strong> </div>
@@ -115,6 +115,9 @@
                         Enter Join Code: 
                         <input type="text" name="code" required>
                         <input type="submit" value="Submit">
+                        @if ( !empty($errorMessage))
+                            <p class="error-message"> @if($errorMessage == '1') Code does not exist! Please try another. @else You suck. @endif</p>
+                        @endif
                     </div>
 
                 </form

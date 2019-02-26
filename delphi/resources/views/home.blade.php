@@ -24,7 +24,7 @@
 
                         <input type="submit" class="btn btn-primary" value="Submit Code">
                         @if ( !empty($errorMessage))
-                            <p class="error-message"> @if($errorMessage == '1') Code Already Exists @else Something went wrong please try again @endif</p>
+                            <p class="error-message"> @if($errorMessage == '1') Code does not exist! Please try another code @else Something went wrong please try again @endif</p>
                         @endif          
                     </form> 
                 </div>
