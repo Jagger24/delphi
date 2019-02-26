@@ -108,6 +108,7 @@
 
                 
                 <form id="join-session" action="{{ route('check') }}" method="POST">
+                    {{ csrf_field() }}
 
                     <div class="join-form">
                         <div class="disclaimer-text"><strong>No reason to sign up! Start voting now:</strong> </div>
@@ -116,7 +117,7 @@
                         <input type="text" name="code" required>
                         <input type="submit" value="Submit">
                         @if ( !empty($errorMessage))
-                            <p class="error-message"> @if($errorMessage == '1') Code does not exist! Please try another. @else You suck. @endif</p>
+                            <p class="error-message"> @if($errorMessage == '1') Code does not exist! Please try another. @else Something went wrong! Please try again. @endif</p>
                         @endif
                     </div>
                 </form>

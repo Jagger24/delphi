@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Session;
+use Auth;
 
-class WelcomeCOntroller extends Controller
+class WelcomeController extends Controller
 {
     /**
      * Handle the incoming request.
@@ -14,13 +16,15 @@ class WelcomeCOntroller extends Controller
      */
     public function check(Request $request)
     {
-        $this->validate($request, [
-            'joinCode' => 'required:min:5|max:10'
-        ]);
+        //$this->validate($request, [
+        //    'joinCode' => 'required:min:5|max:10'
+        //]);
 
         //check if the code already exists
         $codeAlreadyExists = Session::checkCodeExists($request->request->get("joinCode"));
         $errorMessage = '';
+
+
 
         if ($codeAlreadyExists == 0){
             $errorMessage = "1";
@@ -28,6 +32,7 @@ class WelcomeCOntroller extends Controller
             return view('welcome', ['errorMessage'=>$errorMessage]);
 
         }
+
         var_dump($codeAlreadyExists);die;
     }
 }
