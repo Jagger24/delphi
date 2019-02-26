@@ -51,12 +51,14 @@ class SessionController extends Controller
 	        }
     	}
 
-    	// return view('home',['errorMessage'=>$errorMessage]);
     	return redirect()->action('HomeController@index',['errorMessage'=>$errorMessage]);
     }
 
     public function createListWithOptions(Request $request){
 
+
+        //TODO save the list but check if the list already exists if so just delete the list that exists pretty much
+        //save each individual option in the options array (do a for each on the options they are properly set up)
         $params = $request->request->all();
 
         foreach($params as $key => $param){
