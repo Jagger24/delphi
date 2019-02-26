@@ -56,6 +56,15 @@ class SessionController extends Controller
     }
 
     public function createListWithOptions(Request $request){
-    	
+
+        $params = $request->request->all();
+
+        foreach($params as $key => $param){
+            echo "<pre>";
+            var_dump($param);
+            var_dump($key);
+            echo "</pre>";
+        }
+    	die;
     }
 }

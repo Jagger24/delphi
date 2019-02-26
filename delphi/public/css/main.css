@@ -34,3 +34,22 @@
 #user-dashboard span.session-code{
 	font-size:20px;
 }
+
+#new-list-page #new-list-form{
+	font-size:1.5rem;
+	padding:3rem 0rem 3rem 3rem;
+	margin-top:5rem;
+	border: 1.5px solid black;
+}
+
+#new-list-form label{
+	text-align:center;
+}
+
+#new-list-form input{
+	margin: 0 15% 0 10px;
+}
+
+#new-list-form input.radio{
+	margin: 0 5px 0 10px;
+}

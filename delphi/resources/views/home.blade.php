@@ -58,7 +58,7 @@
                     <!-- @TODO Enter in lists dynamically-->
                     <ul class="delphi-list">
                         @foreach ($sessions as $session)
-                            <li class="delphi-list-item"><span class="session-code">{{ $session->code }}</span> <a href="user/{{ $session->code }}/create"><button>Create List</button></a></li>
+                            <li class="delphi-list-item"><span class="session-code">{{ $session->code }}</span> <a href="user/{{ $session->code }}/create"><button>Create List</button></li>
                         @endforeach
                     </ul>
                 </div>
