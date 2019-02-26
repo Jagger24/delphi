@@ -45,4 +45,12 @@ class HomeController extends Controller
         }
         return view('newList',['code'=>$code]);
     }
+
+    public function totalVoters($code){
+        [$students, $name] = List::getStudentsandNameByCodeAndActive($code);
+        if($students == null) {
+            return view('totalVoters', ['errorMessage'=>'This list is not active.']);
+        }
+        return view('totalVoters', ['students'=>$students, 'code'=>$code, 'name'=>$name]);
+    }
 }
