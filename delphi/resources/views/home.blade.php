@@ -2,11 +2,8 @@
 
 @section('content')
 <div id="user-dashboard" class="container">
-
-   
-
     <div class="row justify-content-center">
-        <h2 id="welcome-header">Welcome to your profile <?= Auth::user()->name ?></h1>
+        <h2 id="welcome-header">Welcome to your profile <?= Auth::user()->name ?></h2>
     </div>
     <div class="row justify-content-center">
         <div class="col-md-8">

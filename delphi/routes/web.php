@@ -31,3 +31,5 @@ Route::post('/home', 'SessionController@store')->name('sessionStore');
 
 Route::post('user/{sessionCode}/create', 'SessionController@createListWithOptions');
 Route::get('user/{sessionCode}/create', 'HomeController@newList');
+
+Route::get('user/{sessionCode}/total-voters', 'HomeController@totalVoters');
