@@ -36,16 +36,16 @@ class HomeController extends Controller
         }
     }
 
-    public function newList($code){
+    public function newGroup($code){
         $session = Session::getIdByUserIdAndCode(Auth::user()->id, $code);
         if($session == null){
-            return view('newList',['errorMessage'=>'You do not have own this code or the code does not exist    CODE: ', 'code'=>$code]);
+            return view('newGroup',['errorMessage'=>'You do not have own this code or the code does not exist    CODE: ', 'code'=>$code]);
         }
-        return view('newList',['code'=>$code]);
+        return view('newGroup',['code'=>$code]);
     }
 
     public function totalVoters($code){
-        [$students, $name] = List::getStudentsandNameByCodeAndActive($code);
+        [$students, $name] = Group::getStudentsandNameByCodeAndActive($code);
         if($students == null) {
             return view('totalVoters', ['errorMessage'=>'This list is not active.']);
         }
