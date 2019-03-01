@@ -34,8 +34,6 @@ class HomeController extends Controller
         }else{
             return view('home', ['sessions'=>$sessions]);
         }
-
-        
     }
 
     public function newList($code){

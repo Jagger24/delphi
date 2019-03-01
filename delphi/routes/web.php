@@ -19,7 +19,6 @@ Route::get('/about', 'PageController@about')->name('about');
 Route::get('/contact','PageController@contact')->name('contact');
 Route::post('/contact','PageController@submitContact');
 
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -28,12 +27,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/home', 'SessionController@store')->name('sessionStore');
 
-
 Route::post('user/{sessionCode}/create', 'SessionController@createListWithOptions');
 Route::get('user/{sessionCode}/create', 'HomeController@newList');
-
 
 Route::post('/welcome', 'WelcomeController@check')->name('check');
 
 Route::get('user/{sessionCode}/total-voters', 'HomeController@totalVoters');
-
