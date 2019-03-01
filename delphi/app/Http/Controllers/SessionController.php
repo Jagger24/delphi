@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Session;
-use App\List;
+use App\Group;
 
 class SessionController extends Controller
 {
@@ -55,17 +55,17 @@ class SessionController extends Controller
     }
 
     public function createListWithOptions(Request $request){
-        //TODO save the list but check if the list already exists if so just delete the list that exists pretty much
+        //TODO save the group but check if the group already exists if so just delete the group that exists pretty much
         //save each individual option in the options array (do a for each on the options they are properly set up)
         $params = $request->request->all();
 
-        $list = new List();
-        $list->code = $params["joinCode"];
-        $list->name = $params["name"];
-        $list->active = $params["active"];
-        $list->students = $params["students"];
+        $group = new Group();
+        $group->code = $params["joinCode"];
+        $group->name = $params["name"];
+        $group->active = $params["active"];
+        $group->students = $params["students"];
 
-        if($list->save()){
+        if($group->save()){
 
         } else {
             var_dump("error");die;
@@ -74,8 +74,8 @@ class SessionController extends Controller
 
         foreach($params["option"] as $option){
             $new_option = new Option();
-            $new_option->name = $option["name"][];
-            $new_option->description = $option["description"][];
+            $new_option->name = $option["name"];
+            $new_option->description = $option["description"];
             $new_option->save();
         }
 
@@ -87,8 +87,8 @@ class SessionController extends Controller
      //    }
     	// die;
 
-        if($list->active=="true"){
-            return //some voting route;
+        if($group->active=="true"){
+            return "got to voting";//some voting route;
         }else{
             return redirect()->action('HomeController@index');
         }
