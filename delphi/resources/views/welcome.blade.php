@@ -119,8 +119,7 @@
                             <p class="error-message"> @if($errorMessage == '1') Code does not exist! Please try another. @else You suck. @endif</p>
                         @endif
                     </div>
-
-                </form
+                </form>
             </div>
         </div>
     </body>
