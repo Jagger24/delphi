@@ -91,7 +91,7 @@
                         @endif
                     @endauth
                 </div>
-            @endif
+            @endif 
 
             <div class="content">
                 <div class="title m-b-md">
@@ -100,17 +100,17 @@
 
                 <div class="links">
                     <a href="{{ route('about') }}">About Delphi</a>
-                    @guest
+                   <!-- @guest
                         <a href="{{ route('login') }}">{{ __('Login') }}</a>
                         <a href="{{ route('register') }}">{{ __('Register') }}</a>
-                    @endif
+                    @endif -->
                 </div>
 
                 
                 <form id="join-session" action="{{ route('check') }}" method="POST">
 
                     <div class="join-form">
-                        <div class="disclaimer-text"><strong>No reason to sign up! Start voting now:</strong> </div>
+                        <div class="disclaimer_text"><strong>No reason to sign up! Start voting now:</strong> </div>
                         <br />
                         Enter Join Code: 
                         <input type="text" name="code" required>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -26,8 +27,58 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+
 </head>
 <body>
+    <!-- Top navigation bar -->
+    <div id="topNav">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                @guest
+                <!-- User not logged in navigation bar -->
+                <ul class="nav navbar-nav navbar-left">
+                    <li> <a class="navbar-brand" href="{{ url('/') }}"> Delphi </a></li> 
+                </ul>
+                <ul class="nav navbar-nav navbar-left">
+                    <a class="nav-link" href="{{ route('login') }}"> <span class="glyphicon glyphicon-log-in"></span> Login</a>
+                </ul>
+                <ul class="nav navbar-nav navbar-left">
+                    <a class="nav-link" href="{{ route('register') }}"> <span class="glyphicon glyphicon-user"></span> Register</a>
+                </ul>
+
+                @else
+                <!-- User logged in navigation bar -->
+                <ul class="nav navbar-nav navbar-left">
+                    <li> <a class="navbar-brand" href=""> Delphi </a></li> 
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li><a href="{{ route('home') }}"><span class="glyphicon glyphicon-home"></span> Home </a></li> 
+                </ul>
+                <ul class="nav navbar-nav navbar-left">
+                    <li> <a href=""> <span class="glyphicon glyphicon-stats"></span> Stats </a> </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-left">
+                    <li> <a href=""> <span class="glyphicon glyphicon-cog"></span> Settings </a> </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                            <span class="glyphicon glyphicon-log-out"> </span> Logout
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </li>
+                </ul>
+                @endguest
+            </div>
+        </nav>
+    </div>
+
+    <!--
+
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
@@ -39,14 +90,14 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
+           
                     <ul class="navbar-nav mr-auto">
 
                     </ul>
 
-                    <!-- Right Side Of Navbar -->
+               
                     <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
+                 
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -80,9 +131,12 @@
             </div>
         </nav>
 
-        <main class="py-4">
+    -->
+
+
+    <main class="py-4">
             @yield('content')
-        </main>
+    </main>
     </div>
 </body>
 </html>

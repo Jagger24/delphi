@@ -13,10 +13,59 @@
 
 	<!-- ENTER FORM FOR ADDING A NEW LIST HERE-->
 
-	 <div class="row justify-content-center">
+	<div class="row justify-content-center">
         <h2 id="welcome-header">Create a new list for the code: {{ $code }}</h1>
 	</div>
 
+		<div class="card">
+			<div class="card-header">
+				New List Form
+			</div>
+			<div class="card-body">
+ 				<form class="form-horizontal" action="/action_page.php">
+  					<div class="form-group">
+    					<label class="control-label col-sm-5" for="list_name">Name of List:</label>
+    					<div class="col-sm-10">
+      						<input type="text" class="form-control" id="listname" placeholder="Name of List">
+    					</div>
+  					</div>
+  					<div class="form-group">
+    					<label class="control-label col-sm-5" for="max_student">Number of students for list:</label>
+    					<div class="col-sm-10">
+      						<input type="text" class="form-control" id="maxstudent" placeholder="Number of students for list">
+    					</div>
+  					</div>
+
+
+
+  					<div class="form-group">
+    					<label class="control-label col-sm-5" for="option_name">Option Name:</label>
+    					<div class="col-sm-10">
+      						<input type="text" class="form-control" id="optionname" placeholder="Option name">
+    					</div>
+  					</div>
+
+  					<div class="form-group">
+    					<label class="control-label col-sm-5" for="additional_info">Additional Info:</label>
+    					<div class="col-sm-10">
+      						<input type="text" class="form-control" id="additionalinfo" placeholder="Additional info">
+    					</div>
+  					</div>
+
+  					<div class="form-group">
+    					<div class="col-sm-offset-2 col-sm-10">
+      					<button type="submit" id="addoption" class="btn btn-secondary">Add an Option</button>
+    					</div>
+  					</div>
+
+  					<div class="form-group">
+    					<div class="col-sm-offset-2 col-sm-10">
+      					<button type="submit" class="btn btn-danger">Submit List</button>
+    					</div>
+  					</div>
+				</form> 
+			</div>
+		</div>
 
 		<form action="/user/{{ $code }}/create" id="new-list-form" method="POST">
 			{{ csrf_field() }}	
