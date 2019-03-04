@@ -8,12 +8,22 @@ class Group extends Model
 {
     public static function getStudentsandNameByCodeAndActive($code) {
     	$group = Group::select('students','name')->where('active',true)->where('code',$code)->get();
-    	var_dump($group->first);die;
 		if($group->first()){
 			return [$group->first()->attributes['students'],$group->first()->attributes['name']];
 		}else{
 			return null;
 		}
     }
+
+	public static function getByNameAndCode($code, $name){
+		$group = Group::select('id')->where('code',$code)->where('name',$name)->get();
+		return $group->first()->attributes['id'];
+	}
+
+	public static function getByCode($code){
+		$groups = Group::select('id','name','active')->where('code',$code)->get();
+		// var_dump($groups->first()->attributes['name']);die;
+		return $groups;
+	}
 
 }

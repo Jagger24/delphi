@@ -41,41 +41,41 @@
                 <thead class="table-dark"> 
                     <th> # </th>
                     <th> Delphi Code </th>
-                    <th> Create List </th>
+                    <th> List Name </th>
+                    <th> Create/View List </th>
                     <th> Active </th>
                     <th> Remaining Time </th>
                     <th> Description </th>
                 </thead>
                 <tbody>
-                    @foreach($sessions as $session)
+                    @foreach($infoArray as $session)
                         <tr>
-                            <td> {{$session->id}} </td>
-                            <td> {{$session->code}} </td>
-                            <td> <a href="user/{{ $session->code }}/create"><button class="btn btn-primary" value="Create List">Create List</button> </td>
-                            <td> Active </td>
-                            <td> 5 hrs. </td>
+                            <td> {{$session['id']}} </td>
+                            <td> {{$session['code']}} </td>
+                            <td></td>
+                            <td> <a href="user/{{ $session['code'] }}/create"><button class="btn btn-primary" value="Create List">Create List</button> </td>
+                            <td></td>
+                            <td></td>
                             <td> -- </td>
                         </tr>
+
+                        @foreach($session['groups'] as $group)
+                            <tr>
+                                <td> </td>
+                                <td> {{$session['code']}} </td>
+                                <td>{{$group['name']}}</td>
+                                <td> <a href="user/{{ $session['code'] }}/{{$group['name']}}/view"><button class="btn btn-danger" value="Create List">View List</button></td>
+                                <td> @if($group['active'] == 0) false @else true @endif</td>
+                                <td> HARD CODED N/A</td>
+                                <td> -- </td>
+                            </tr>
+
+                        @endforeach
                     @endforeach
             </table>
         </div>
     </div>
 
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Start Voting on Your List: </div>
-                <div class="card-body">
-                    <!-- @TODO Enter in lists dynamically-->
-                    <ul class="delphi-list">
-                        <li class="delphi-list-item">List1 <span class="delphi-description" >This is a description of list one</span></li>
-                        <li class="delphi-list-item">List2 <span class="delphi-description" >This is a description of list two</span></li>
-                        <li class="delphi-list-item">List3 <span class="delphi-description" >This is a description of list three</span></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!--
 

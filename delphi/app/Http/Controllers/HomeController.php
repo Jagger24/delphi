@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Session;
+use App\Group;
 use Auth;
 
 class HomeController extends Controller
@@ -28,11 +29,26 @@ class HomeController extends Controller
         $user = Auth::user();
         $sessions = Session::getByUserId($user->id);
 
+        $infoArray = [];
+
+        foreach($sessions as $key =>$session){
+            $infoArray[$key]['id'] = $session->id;
+            $infoArray[$key]['code'] = $session->code;
+            $i=0;
+            foreach(Group::getByCode($session->code) as $groupKey => $group){
+
+                $infoArray[$key]['groups'][$groupKey]['id'] = $group->id;
+                $infoArray[$key]['groups'][$groupKey]['name'] = $group->name;
+                $infoArray[$key]['groups'][$groupKey]['active'] = $group->active;
+
+            }
+        }
+
         if($request->query->get('errorMessage')){
             $errorMessage = $request->query->get('errorMessage');
             return view('home', ['errorMessage'=>$errorMessage, 'sessions'=>$sessions]);
         }else{
-            return view('home', ['sessions'=>$sessions]);
+            return view('home', ['sessions'=>$sessions, 'infoArray'=>$infoArray]);
         }
     }
 
@@ -50,5 +66,12 @@ class HomeController extends Controller
             return view('totalVoters', ['errorMessage'=>'This list is not active.']);
         }
         return view('totalVoters', ['students'=>$students_name[0], 'code'=>$code, 'name'=>$students_name[1]]);
+    }
+
+    public function listView($code, $name){
+        //@TODO grab the options of the view. 
+        var_dump($code);
+        var_dump($name);die;
+
     }
 }

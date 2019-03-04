@@ -33,3 +33,5 @@ Route::get('user/{sessionCode}/create', 'HomeController@newGroup');
 Route::post('/welcome', 'WelcomeController@check')->name('check');
 
 Route::get('user/{sessionCode}/total-voters', 'HomeController@totalVoters');
+
+Route::get('user/{sessionCode}/{groupCode}/view','HomeController@listView');

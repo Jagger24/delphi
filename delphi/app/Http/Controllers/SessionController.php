@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Session;
 use App\Group;
+use App\Option;
+use DB;
 
 class SessionController extends Controller
 {
@@ -58,34 +60,26 @@ class SessionController extends Controller
         //TODO save the group but check if the group already exists if so just delete the group that exists pretty much
         //save each individual option in the options array (do a for each on the options they are properly set up)
         $params = $request->request->all();
-
         $group = new Group();
         $group->code = $params["joinCode"];
         $group->name = $params["name"];
-        $group->active = $params["active"];
+        $group->active = ($params["active"]) ? true : false;
         $group->students = $params["students"];
 
         if($group->save()){
 
         } else {
             var_dump("error");die;
-            // error
         }
 
         foreach($params["option"] as $option){
             $new_option = new Option();
             $new_option->name = $option["name"];
             $new_option->description = $option["description"];
+            $new_option->result = 0;
+            $new_option->lid = Group::getByNameAndCode($group->code, $group->name);
             $new_option->save();
         }
-
-     //    foreach($params as $key => $param){
-     //        echo "<pre>";
-     //        var_dump($param);
-     //        var_dump($key);
-     //        echo "</pre>";
-     //    }
-    	// die;
 
         if($group->active=="true"){
             return "got to voting";//some voting route;
