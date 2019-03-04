@@ -41,14 +41,14 @@ class HomeController extends Controller
         if($session == null){
             return view('newGroup',['errorMessage'=>'You do not have own this code or the code does not exist    CODE: ', 'code'=>$code]);
         }
-        return view('newGroup',['code'=>$code]);
+        return view('newGroup',['code'=>$code, 'session'=>$session]);
     }
 
     public function totalVoters($code){
-        [$students, $name] = Group::getStudentsandNameByCodeAndActive($code);
+        $students_name = Group::getStudentsandNameByCodeAndActive($code);
         if($students == null) {
             return view('totalVoters', ['errorMessage'=>'This list is not active.']);
         }
-        return view('totalVoters', ['students'=>$students, 'code'=>$code, 'name'=>$name]);
+        return view('totalVoters', ['students'=>$students_name[0], 'code'=>$code, 'name'=>$students_name[1]]);
     }
 }

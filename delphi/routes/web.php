@@ -27,7 +27,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/home', 'SessionController@store')->name('sessionStore');
 
-Route::post('user/{sessionCode}/create', 'SessionController@createListWithOptions');
+Route::post('user/{sessionCode}/create', 'SessionController@createListWithOptions')->name('createGroup');
 Route::get('user/{sessionCode}/create', 'HomeController@newGroup');
 
 Route::post('/welcome', 'WelcomeController@check')->name('check');

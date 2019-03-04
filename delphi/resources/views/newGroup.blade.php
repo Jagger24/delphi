@@ -36,8 +36,6 @@
     					</div>
   					</div>
 
-
-
   					<div class="form-group">
     					<label class="control-label col-sm-5" for="option_name">Option Name:</label>
     					<div class="col-sm-10">
@@ -54,13 +52,16 @@
 
   					<div class="form-group">
     					<div class="col-sm-offset-2 col-sm-10">
-      					<button type="submit" id="addoption" class="btn btn-secondary">Add an Option</button>
+      						<button type="submit" id="addoption" class="btn btn-secondary">Add an Option</button>
     					</div>
   					</div>
 
   					<div class="form-group">
     					<div class="col-sm-offset-2 col-sm-10">
-      					<button type="submit" class="btn btn-danger">Submit List</button>
+    						<form action="{{action('SessionController@createListWithOptions', $code)}}">
+    							<input type="hidden" id="createGroup" name="createGroup" value="{{$code}}">
+      							<button type="submit" class="btn btn-danger">Submit List</button>
+      						</form>
     					</div>
   					</div>
 				</form> 

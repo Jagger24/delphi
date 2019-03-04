@@ -7,8 +7,6 @@
     <div class="row justify-content-center">
         <h2 id="welcome-header">Welcome back, <?= Auth::user()->name ?> </h2>
     </div>
-
-
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -51,9 +49,9 @@
                 <tbody>
                     @foreach($sessions as $session)
                         <tr>
-                            <td> 1 </td>
+                            <td> {{$session->id}} </td>
                             <td> {{$session->code}} </td>
-                            <td> <a href="user/{{ $session->code }}/create"><button>Create List</button> </td>
+                            <td> <a href="user/{{ $session->code }}/create"><button class="btn btn-primary" value="Create List">Create List</button> </td>
                             <td> Active </td>
                             <td> 5 hrs. </td>
                             <td> -- </td>
@@ -67,7 +65,6 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Start Voting on Your List: </div>
-
                 <div class="card-body">
                     <!-- @TODO Enter in lists dynamically-->
                     <ul class="delphi-list">
