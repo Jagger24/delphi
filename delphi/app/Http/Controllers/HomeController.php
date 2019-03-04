@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Session;
 use App\Group;
+use App\Option;
 use Auth;
 
 class HomeController extends Controller
@@ -68,10 +69,21 @@ class HomeController extends Controller
         return view('totalVoters', ['students'=>$students_name[0], 'code'=>$code, 'name'=>$students_name[1]]);
     }
 
-    public function listView($code, $name){
-        //@TODO grab the options of the view. 
-        var_dump($code);
-        var_dump($name);die;
+    public function listView($code, $id){
+        //@TODO grab the options of the view.
 
+        $options = [];
+
+       
+        foreach(Option::getByListId($id) as $key => $option){
+            $options[$key]['name'] = $option->name;
+            $options[$key]['description'] = $option->description;
+        }
+        return view('listView', ['options'=>$options, 'code'=>$code, 'id'=>$id]);
+
+    }
+
+    public function listViewActivate($code, $id){
+        var_dump($code);var_dump($id);die;
     }
 }

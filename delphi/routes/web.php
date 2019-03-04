@@ -34,4 +34,5 @@ Route::post('/welcome', 'WelcomeController@check')->name('check');
 
 Route::get('user/{sessionCode}/total-voters', 'HomeController@totalVoters');
 
-Route::get('user/{sessionCode}/{groupCode}/view','HomeController@listView');
+Route::get('user/{sessionCode}/{id}/view','HomeController@listView');
+Route::post('user/{sessionCode}/{id}/view','HomeController@listViewActivate');
