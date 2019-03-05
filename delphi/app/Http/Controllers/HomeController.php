@@ -61,12 +61,8 @@ class HomeController extends Controller
         return view('newGroup',['code'=>$code, 'session'=>$session]);
     }
 
-
-
     public function listView($code, $id){
-
         $options = [];
-
        
         foreach(Option::getByListId($id) as $key => $option){
             $options[$key]['name'] = $option->name;
@@ -77,18 +73,19 @@ class HomeController extends Controller
     }
 
     public function listViewActivate(Request $request, $code, $id){
-
         $params = $request->request->all();
         Group::setActiveGroupsBySessionCodeToInactive($code);
         $list = Group::find($id);
         $list->students = $params['students'];
         $list->active = true;
+        $list->voted = 0;
         $list->save();
+        Option::resetResultField($id);
         return redirect('user/'.$code.'/'.$id.'/total-voters')->with('group', $list);
     }
 
-        public function totalVoters($code, $id){
-            $list = Group::find($id);   
-            return view('totalVoters', ['group'=>$list]);
+    public function totalVoters($code, $id){
+        $list = Group::find($id);   
+        return view('totalVoters', ['group'=>$list]);
     }
 }

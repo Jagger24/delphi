@@ -24,6 +24,7 @@
                         <input type="submit" class="btn btn-primary" value="Submit Code">
                         @if (!empty($errorMessage))
                             <p class="error-message"> @if($errorMessage == '1') Code Already exists! Please try another code @else Something went wrong please try again @endif</p>
+
                         @endif          
                     </form> 
                 </div>
@@ -78,28 +79,5 @@
             </table>
         </div>
     </div>
-
-
-    <!--
-
-     @TODO Enter a section to add new lists to a specific code? 
-        <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Your Delphi Codes </div>
-
-                <div class="card-body">
-                    @TODO Enter in lists dynamically
-                    <ul class="delphi-list">
-                        @foreach ($sessions as $session)
-                            <li class="delphi-list-item"><span class="session-code">{{ $session->code }}</span> <a href="user/{{ $session->code }}/create"><button>Create List</button></li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    -->
 </div>
 @endsection
