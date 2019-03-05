@@ -65,7 +65,7 @@
                                 <td> </td>
                                 <td> {{$sessioned['code']}} </td>
                                 <td>{{$group['name']}}</td>
-                                <td> <a href="user/{{ $session['code'] }}/{{$group['id']}}/view"><button class="btn btn-danger" value="Create List">View List</button></td>
+                                <td> <a href="user/{{ $sessioned['code'] }}/{{$group['id']}}/view"><button class="btn btn-danger" value="Create List">View List</button></td>
                                 <td> @if($group['active'] == 0) false @else true @endif</td>
                                 <td> HARD CODED N/A</td>
                                 <td> -- </td>
