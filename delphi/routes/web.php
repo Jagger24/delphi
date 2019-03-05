@@ -32,7 +32,12 @@ Route::get('user/{sessionCode}/create', 'HomeController@newGroup');
 
 Route::post('/welcome', 'WelcomeController@check')->name('check');
 
-Route::get('user/{sessionCode}/total-voters', 'HomeController@totalVoters');
+Route::get('user/{sessionCode}/{id}/total-voters', 'HomeController@totalVoters');
 
 Route::get('user/{sessionCode}/{id}/view','HomeController@listView');
 Route::post('user/{sessionCode}/{id}/view','HomeController@listViewActivate');
+
+Route::get('group/{sessionCode}/{id}','SessionController@statistics');
+
+//AJAX CALLS FOR STUDENTS AND MAYBE STATS?
+Route::get('student-count-ajax','Ajax@studentCount');

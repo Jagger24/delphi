@@ -69,7 +69,7 @@ class SessionController extends Controller
         if($group->save()){
 
         } else {
-            var_dump("error");die;
+            //@TODO SOME ERROR HERE
         }
 
         foreach($params["option"] as $option){
@@ -86,5 +86,18 @@ class SessionController extends Controller
         }else{
             return redirect()->action('HomeController@index');
         }
+    }
+
+    public function statistics($code, $lid){
+        $list = Group::find($id);
+
+
+        return view('statistics');
+    }
+
+
+    private function parseOption($option){
+        $parsedOption = new Option();
+        return $parsedOption
     }
 }

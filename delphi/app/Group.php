@@ -26,4 +26,14 @@ class Group extends Model
 		return $groups;
 	}
 
+	public static function setActiveGroupsBySessionCodeToInactive($code){
+		$groups = Group::where('code',$code);
+		if($groups->first()){
+			foreach($groups as $group){
+				$group->active = false;
+				$group->save();
+			}
+		}
+	}
+
 }

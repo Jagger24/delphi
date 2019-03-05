@@ -61,13 +61,7 @@ class HomeController extends Controller
         return view('newGroup',['code'=>$code, 'session'=>$session]);
     }
 
-    public function totalVoters($code){
-        $students_name = Group::getStudentsandNameByCodeAndActive($code);
-        if($students == null) {
-            return view('totalVoters', ['errorMessage'=>'This list is not active.']);
-        }
-        return view('totalVoters', ['students'=>$students_name[0], 'code'=>$code, 'name'=>$students_name[1]]);
-    }
+
 
     public function listView($code, $id){
 
@@ -85,11 +79,21 @@ class HomeController extends Controller
     public function listViewActivate(Request $request, $code, $id){
 
         $params = $request->request->all();
-        
+        Group::setActiveGroupsBySessionCodeToInactive($code);
+        $list = Group::find($id);
+        $list->students = $params['students'];
+        // $list->active = true;
+        $list->save();
         //get list by id
         //make it active
         //make other lists in that session that are active inactive
         //route user to totalVoters screen and let them end voting there but send the timelimit there
-        var_dump($params);die;
+        return redirect('user/'.$code.'/'.$id.'/total-voters')->with('group', $list);
+    }
+
+        public function totalVoters($code, $id){
+            $list = Group::find($id);   
+            // var_dump($id);die;
+            return view('totalVoters', ['group'=>$list]);
     }
 }
