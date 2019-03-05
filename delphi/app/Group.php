@@ -22,7 +22,6 @@ class Group extends Model
 
 	public static function getByCode($code){
 		$groups = Group::select('id','name','active')->where('code',$code)->get();
-		// var_dump($groups->first()->attributes['name']);die;
 		return $groups;
 	}
 
@@ -33,6 +32,15 @@ class Group extends Model
 				$group->active = false;
 				$group->save();
 			}
+		}
+	}
+
+	public static function getActiveGroupByCode($code){
+		    	$group = Group::where('active',true)->where('code',$code)->get();
+		if($group->first()){
+			return $group->first();
+		}else{
+			return null;
 		}
 	}
 

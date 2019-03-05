@@ -38,6 +38,10 @@ Route::get('user/{sessionCode}/{id}/view','HomeController@listView');
 Route::post('user/{sessionCode}/{id}/view','HomeController@listViewActivate');
 
 Route::get('group/{sessionCode}/{id}','SessionController@statistics');
+Route::get('group/{sessioncode}/{id}/voting','SessionController@votingPage');
+Route::post('group/{sessioncode}/{id}/voting', 'SessionController@saveVote')->name('saveName');
+// Route::get('group/{sessioncode}/{id}/waiting','SessionController@waiting');
 
 //AJAX CALLS FOR STUDENTS AND MAYBE STATS?
 Route::get('student-count-ajax','Ajax@studentCount');
+Route::get('stat-check','Ajax@statCheck');

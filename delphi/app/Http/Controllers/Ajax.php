@@ -10,11 +10,26 @@ class Ajax extends Controller
     public function studentCount(Request $request){
 
     	$list = Group::find($request->get('listId'));
+
     	$voted = ($list->voted) ? $list->voted : 0;
 
     	$response = array(
 			'status' => 'success',
 			'students' => $voted
+    	);
+
+
+    	return response()->json($response);
+    }
+
+    public function statCheck(Request $request){
+
+    	$list = Group::find($request->get('listId'));
+    	$complete = ($list->voted >= $list->students) ? true: false;
+
+    	$response = array(
+			'status' => 'success',
+			'complete' => $complete
     	);
 
     	return response()->json($response);

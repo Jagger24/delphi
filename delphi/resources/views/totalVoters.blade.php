@@ -26,7 +26,7 @@
 
 <script>
 	$(document).ready(function(){
-		setInterval(studentAjax, 3000); //call ajax every 10 seconds
+		setInterval(studentAjax, 3000); //call ajax every 3 seconds
 	});
 
 	function studentAjax(){
@@ -41,7 +41,7 @@
 				console.log(data);
 				$('#voted-students').html(data.students);
 			},
-			error: function(){
+			error: function(data){
 				console.log('failed');
 			}
 		});

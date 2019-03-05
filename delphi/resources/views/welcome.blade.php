@@ -117,7 +117,7 @@
                         <input type="text" name="code" required>
                         <input type="submit" value="Submit">
                         @if ( !empty($errorMessage))
-                            <p class="error-message"> @if($errorMessage == '1') Code does not exist! Please try another. @else Something went wrong! Please try again. @endif</p>
+                            <p class="error-message"> @if($errorMessage == '1') Code does not exist! Please try another. @else There is currently no active list with that session code @endif</p>
                         @endif
                     </div>
                 </form>

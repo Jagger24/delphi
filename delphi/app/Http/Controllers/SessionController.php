@@ -115,4 +115,44 @@ class SessionController extends Controller
     private function cmpResult($a, $b){
         return $a->result > $b->result;
     }
+
+
+    public function votingPage($code, $lid){
+        $list = Group::find($lid);
+
+        if($list){
+            $options = Option::getOptionsByListId($list->id);
+
+            return view('votingPage', ['options'=>$options, 'group'=>$list]);
+        }
+
+        return "List Does not exist";
+    }
+
+    public function saveVote($code, $lid, Request $request){
+        $list = Group::find($lid);
+        $active = $list->active;
+
+        if($active){
+            $list->voted = $list->voted + 1;
+            $list->save();
+
+            foreach($request->request->all() as $key => $param){
+                if(is_numeric($key)){
+                    $option = Option::find($key);
+                    $option->result = $option->result + $param;
+                    $option->save();
+                }
+            }
+            $message = "1";
+        }else{
+            $message = "2";
+        }
+
+        return view('waiting', ['group'=>$list, 'message'=>$message]);
+
+
+    }
+
+
 }
