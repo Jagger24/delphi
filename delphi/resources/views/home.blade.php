@@ -48,6 +48,7 @@
                     <th> Description </th>
                 </thead>
                 <tbody>
+                @if($infoArray)
                     @foreach($infoArray as $session)
                         <tr>
                             <td> {{$session['id']}} </td>
@@ -58,7 +59,7 @@
                             <td></td>
                             <td> -- </td>
                         </tr>
-
+                    @if ($session['groups'])
                         @foreach($session['groups'] as $group)
                             <tr>
                                 <td> </td>
@@ -71,7 +72,9 @@
                             </tr>
 
                         @endforeach
-                    @endforeach
+                    @endif
+                    @endforeach 
+                @endif    
             </table>
         </div>
     </div>

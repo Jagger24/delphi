@@ -70,7 +70,6 @@ class HomeController extends Controller
     }
 
     public function listView($code, $id){
-        //@TODO grab the options of the view.
 
         $options = [];
 
@@ -83,7 +82,14 @@ class HomeController extends Controller
 
     }
 
-    public function listViewActivate($code, $id){
-        var_dump($code);var_dump($id);die;
+    public function listViewActivate(Request $request, $code, $id){
+
+        $params = $request->request->all();
+        
+        //get list by id
+        //make it active
+        //make other lists in that session that are active inactive
+        //route user to totalVoters screen and let them end voting there but send the timelimit there
+        var_dump($params);die;
     }
 }
