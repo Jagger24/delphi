@@ -44,10 +44,10 @@ class HomeController extends Controller
 
             }
         }
-
+        
         if($request->query->get('errorMessage')){
             $errorMessage = $request->query->get('errorMessage');
-            return view('home', ['errorMessage'=>$errorMessage, 'sessions'=>$sessions]);
+            return view('home', ['errorMessage'=>$errorMessage, 'sessions'=>$sessions, 'infoArray'=>$infoArray]);
         }else{
             return view('home', ['sessions'=>$sessions, 'infoArray'=>$infoArray]);
         }
