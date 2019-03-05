@@ -10,4 +10,8 @@ class Option extends Model
     	return Option::select('name','description')->where('lid',$id)->get();
 
     }
+
+    public static function getOptionsByListId($id){
+    	return Option::where('lid',$id)->get();
+    }
 }

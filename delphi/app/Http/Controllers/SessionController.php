@@ -89,15 +89,28 @@ class SessionController extends Controller
     }
 
     public function statistics($code, $lid){
-        $list = Group::find($id);
+        $list = Group::find($lid);
 
+        if($list){
+            $options = Option::getOptionsByListId($list->id);
 
-        return view('statistics');
+            $option_array = [];
+
+            foreach($options as $key => $option){
+                $option_array[$key] = $option;
+            }
+            usort($option_array, array($this,"cmpResult"));
+
+            return view('statistics', ['sorted_options'=>$option_array, 'group'=>$list]);
+
+        }else{
+            return "List Does not exist";
+        }
     }
 
 
-    private function parseOption($option){
-        $parsedOption = new Option();
-        return $parsedOption
+
+    private function cmpResult($a, $b){
+        return $a->result > $b->result;
     }
 }

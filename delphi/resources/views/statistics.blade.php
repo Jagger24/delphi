@@ -14,6 +14,29 @@
 	    INSERT SORTED OPTIONS HERE
     </div>		
 
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <table class="table table-hover table-bordered text-center">
+                <thead class="table-dark"> 
+                    <th> Priority </th>
+                    <th> Option Name </th>
+                    <th> Option Description </th>
+                    <th> Option Result </th>
+                </thead>
+                <tbody>
+                @if($sorted_options)
+                    @foreach($sorted_options as $key => $option)
+                        <tr>
+                            <td> {{ $key + 1}} </td>
+                            <td> {{$option->name}} </td>
+                            <td>{{$option->description}}</td>
+                            <td> {{$option->result}}</td>
+                        </tr>
+                    @endforeach 
+                @endif    
+            </table>
+        </div>
+    </div>
 
 
 </div>

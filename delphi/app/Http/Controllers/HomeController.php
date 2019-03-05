@@ -82,18 +82,13 @@ class HomeController extends Controller
         Group::setActiveGroupsBySessionCodeToInactive($code);
         $list = Group::find($id);
         $list->students = $params['students'];
-        // $list->active = true;
+        $list->active = true;
         $list->save();
-        //get list by id
-        //make it active
-        //make other lists in that session that are active inactive
-        //route user to totalVoters screen and let them end voting there but send the timelimit there
         return redirect('user/'.$code.'/'.$id.'/total-voters')->with('group', $list);
     }
 
         public function totalVoters($code, $id){
             $list = Group::find($id);   
-            // var_dump($id);die;
             return view('totalVoters', ['group'=>$list]);
     }
 }
