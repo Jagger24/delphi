@@ -17,18 +17,14 @@
 </style>
 <div id="voting-page" class="container">
     <div class="row justify-content-center">
-        <h1 id="delphi_code_header"> @if ($message == 1) Success! Please wait while voting is in process @elseif ($message == 2) List is currently inactive @endif </h1>
+        <h1 id="delphi_code_header"> @if ($message == 1) Success! Please wait.. You will be redirected when voting is complete @elseif ($message == 2) List is currently inactive ... Redirecting to stats page @endif </h1>
 
     </div>
 <hr style="border-top:15px solid;"/>
-    <div class="row justify-content-center">
-        <h1 id="delphi_code_header">  @if ($message == 1) When the Voting is complete please click below:@elseif ($message == 2) Click below to see the stats of the voting @endif </h1>
-    </div>
-<div class="row justify-content-center">
-    <a href="/group/{{$group->code}}/{{$group->id}}">
-    	<button id="stat-check" type="button" @if($message == 1) disabled @endif>SEE STATS </button>
-	</a>
-</div>
+
+
+
+
 
 <script>
 	$(document).ready(function(){
@@ -46,7 +42,7 @@
 			success: function(data){
 				console.log(data);
 				if(data.complete){
-					$('#voted-students').removeAttr('disabled');
+					window.location.replace("http://localhost:8000/group/{{$group->code}}/{{$group->id}}")
 				}
 			},
 			error: function(){
