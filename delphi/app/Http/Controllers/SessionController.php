@@ -92,6 +92,8 @@ class SessionController extends Controller
         $list = Group::find($lid);
 
         if($list){
+            $list->active = false;
+            $list->save();
             $options = Option::getOptionsByListId($list->id);
 
             $option_array = [];
