@@ -22,6 +22,8 @@ Route::post('/contact','PageController@submitContact');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/stats', 'StatsController@index')->name('stats');
+
 
 //ROUTES ABOUT GROUPS AND SESSIONS ETC:
 
