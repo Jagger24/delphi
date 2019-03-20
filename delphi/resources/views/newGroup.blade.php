@@ -41,8 +41,14 @@
 
   					<div class="form-group">
     					<label class="control-label col-sm-5" for="active">Start Voting immediateltly after list creation?</label>
-      						<input type="radio"  name="active" value="true" >Yes
-      						<input type="radio" name="active" value="" checked="checked">No
+      						<input class="toggle-method-show" type="radio"  name="active" value="true" >Yes
+      						<input class="toggle-method-hide" type="radio" name="active" value="" checked="checked">No
+  					</div>
+
+  					<div class="form-group display-none">
+    					<label class="control-label col-sm-5" for="voting_method">Delphi Method Type:</label>
+      						<input type="radio"  name="voting_method" value="prioritization" >Prioritization
+      						<input type="radio" name="voting_method" value="elimination" checked="checked">Elimination
   					</div>
 
 
@@ -57,7 +63,7 @@
 	  					<div class="form-group">
 	    					<label class="control-label col-sm-5" for="additional_info">Additional Info:</label>
 	    					<div class="col-sm-10">
-	      						<input type="text" class="form-control" required name="option[1][description]" placeholder="Additional info">
+	      						<input type="text" class="form-control" name="option[1][description]" placeholder="Additional info">
 	    					</div>
 	  					</div>
 					</div>
@@ -94,7 +100,7 @@
 			nextOptionIndex++;
 
 
-			var nextOption = "<div class='form-group'><label class='control-label col-sm-5' for='option_name'>Option Name:</label><div data-number='" + nextOptionIndex + "' class='option col-sm-10'><input type='text' class='form-control' required name='option["+ nextOptionIndex + "][name]'  placeholder='Option name'></div></div> <div class='form-group'><label class='control-label col-sm-5' for='additional_info'>Additional Info:</label><div class='col-sm-10'><input type='text' required class='form-control' name='option[" + nextOptionIndex + "][description]' placeholder='Additional info'></div></div>";
+			var nextOption = "<div class='form-group'><label class='control-label col-sm-5' for='option_name'>Option Name:</label><div data-number='" + nextOptionIndex + "' class='option col-sm-10'><input type='text' class='form-control' required name='option["+ nextOptionIndex + "][name]'  placeholder='Option name'></div></div> <div class='form-group'><label class='control-label col-sm-5' for='additional_info'>Additional Info:</label><div class='col-sm-10'><input type='text' class='form-control' name='option[" + nextOptionIndex + "][description]' placeholder='Additional info'></div></div>";
 			console.log(nextOption);
 
 			
@@ -104,6 +110,12 @@
 
 	});
 
+	$('.toggle-method-hide').click(function() {
+		$('.display-none').hide();
+	});
+	$('.toggle-method-show').click(function() {
+		$('.display-none').show();
+	});
 	
 </script>	
 @endsection

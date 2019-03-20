@@ -50,6 +50,8 @@ Route::get('user/{sessionCode}/{id}/total-voters', 'HomeController@totalVoters')
 
 Route::get('user/{sessionCode}/{id}/view','HomeController@listView');
 Route::post('user/{sessionCode}/{id}/view','HomeController@listViewActivate');
+Route::delete('user/{sessionCode}/delete','HomeController@deleteCode');
+Route::delete('user/{sessionCode}/{groupId}/delete','HomeController@deleteList');
 
 Route::get('group/{sessionCode}/{id}','SessionController@statistics');
 Route::get('group/{sessioncode}/{id}/voting','SessionController@votingPage');

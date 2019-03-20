@@ -27,13 +27,6 @@
 
   					<div class="form-group">
     					<div class="col-sm-10">
-    						<label class="control-label" for="time">Time Limit For Voting (in Minutes)</label>
-      						<input type="number" class="form-control" min="0" name="time" id="time" required placeholder="Time Limit For Voting In Minutes">
-    					</div>
-  					</div>
-
-  					<div class="form-group">
-    					<div class="col-sm-10">
     						<label class="control-label col-sm-5">Activate List</label>
       						<button type="submit" class="btn btn-danger">Activate List</button>
     					</div>
