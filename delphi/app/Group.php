@@ -15,6 +15,11 @@ class Group extends Model
 		}
     }
 
+    public static function getStudentsByCodeAndId($code, $id) {
+    	$num = Group::where('code', $code)->where('id', $id)->pluck('students');
+    	return $num;
+    }
+
 	public static function getByNameAndCode($code, $name){
 		$group = Group::select('id')->where('code',$code)->where('name',$name)->get();
 		return $group->first()->attributes['id'];
@@ -36,7 +41,7 @@ class Group extends Model
 	}
 
 	public static function getActiveGroupByCode($code){
-		    	$group = Group::where('active',true)->where('code',$code)->get();
+		$group = Group::where('active',true)->where('code',$code)->get();
 		if($group->first()){
 			return $group->first();
 		}else{

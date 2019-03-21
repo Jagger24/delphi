@@ -98,9 +98,16 @@ class SessionController extends Controller
 
             $option_array = [];
 
+            // number of students that are voting (used for calculating mean)
+            // note that getStudentsBy... returns a Collection, so we have to use [0]
+            $num_students = Group::getStudentsByCodeAndId($code, $lid)[0];
+
             foreach($options as $key => $option){
                 $option_array[$key] = $option;
             }
+
+            Option::calculateMean($lid, $num_students);
+
             usort($option_array, array($this,"cmpResult"));
 
             return view('statistics', ['sorted_options'=>$option_array, 'group'=>$list]);
@@ -110,12 +117,9 @@ class SessionController extends Controller
         }
     }
 
-
-
     private function cmpResult($a, $b){
         return $a->result > $b->result;
     }
-
 
     public function votingPage($code, $lid){
         $list = Group::find($lid);
@@ -150,9 +154,6 @@ class SessionController extends Controller
         }
 
         return view('waiting', ['group'=>$list, 'message'=>$message]);
-
-
     }
-
 
 }
