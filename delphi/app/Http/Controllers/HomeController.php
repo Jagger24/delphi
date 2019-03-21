@@ -65,6 +65,7 @@ class HomeController extends Controller
         $options = [];
        
         foreach(Option::getByListId($id) as $key => $option){
+            $options[$key]['id'] = $option->id;
             $options[$key]['name'] = $option->name;
             $options[$key]['description'] = $option->description;
         }
@@ -120,5 +121,21 @@ class HomeController extends Controller
         }
 
     }
+
+    //method to delete individual 
+    public function deleteOption(Request $request, $code, $id, $name){
+
+        $option = Option::find($name);
+        
+        $option->delete();
+            
+
+        
+
+
+        return redirect('user/'.$code.'/'.$id.'/view');
+    }
+
+
 //END DELETE METHODS
 }

@@ -53,6 +53,9 @@ Route::post('user/{sessionCode}/{id}/view','HomeController@listViewActivate');
 Route::delete('user/{sessionCode}/delete','HomeController@deleteCode');
 Route::delete('user/{sessionCode}/{groupId}/delete','HomeController@deleteList');
 
+Route::delete('/{sessionCode}/{groupId}/{name}/deleteOption', 'HomeController@deleteOption');
+
+
 Route::get('group/{sessionCode}/{id}','SessionController@statistics');
 Route::get('group/{sessioncode}/{id}/voting','SessionController@votingPage');
 Route::post('group/{sessioncode}/{id}/voting', 'SessionController@saveVote')->name('saveName');
