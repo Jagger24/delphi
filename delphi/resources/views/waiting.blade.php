@@ -25,7 +25,6 @@
 
 
 
-
 <script>
 	$(document).ready(function(){
 		setInterval(studentAjax, 3000); //call ajax every 3 seconds
@@ -42,7 +41,7 @@
 			success: function(data){
 				console.log(data);
 				if(data.complete){
-					window.location.replace("http://localhost:8000/group/{{$group->code}}/{{$group->id}}")
+					window.location.replace("{{$host}}/group/{{$group->code}}/{{$group->id}}")
 				}
 			},
 			error: function(){

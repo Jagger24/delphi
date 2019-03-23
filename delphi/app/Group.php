@@ -44,4 +44,9 @@ class Group extends Model
 		}
 	}
 
+	public static function getByListId($id){
+		$group = Group::where('id',$id)->get();
+		return $group->first();
+	}
+
 }

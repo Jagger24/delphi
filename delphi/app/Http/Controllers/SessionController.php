@@ -148,8 +148,8 @@ class SessionController extends Controller
         }else{
             $message = "2";
         }
-
-        return view('waiting', ['group'=>$list, 'message'=>$message]);
+        $host = $request->getHttpHost();
+        return view('waiting', ['group'=>$list, 'message'=>$message, 'host'=>$host]);
 
 
     }

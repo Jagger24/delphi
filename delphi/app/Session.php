@@ -25,4 +25,9 @@ class Session extends Model
 			return null;
 		}
 	}
+
+	public static function getByCode($code){
+				$session = Session::where('code',$code)->get();
+		return $session->first();
+	}
 }
