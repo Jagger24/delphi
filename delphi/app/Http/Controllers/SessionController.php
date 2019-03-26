@@ -97,6 +97,7 @@ class SessionController extends Controller
             $options = Option::getOptionsByListId($list->id);
 
             $option_array = [];
+            $means = [];
 
             // number of students that are voting (used for calculating mean)
             // note that getStudentsBy... returns a Collection, so we have to use [0]
@@ -106,11 +107,16 @@ class SessionController extends Controller
                 $option_array[$key] = $option;
             }
 
-            Option::calculateMean($lid, $num_students);
+            for ($i = 0; $i < count($option_array); $i++) {
+                $means[$i] = $option_array[$i]->result / $num_students;
+            }
 
+            // since both arrays are sorted in ascending order and sorted 
+            // is divided by a constant, the result should be correct
             usort($option_array, array($this,"cmpResult"));
+            sort($means);
 
-            return view('statistics', ['sorted_options'=>$option_array, 'group'=>$list]);
+            return view('statistics', ['sorted_options'=>$option_array, 'group'=>$list, 'means'=>$means]);
 
         }else{
             return "List Does not exist";

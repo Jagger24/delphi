@@ -19,12 +19,4 @@ class Option extends Model
     public static function resetResultField($id){
     	Option::where('lid',$id)->update(array('result' => 0));
     }
-
-    public static function calculateMean($id, $students){
-    	$current = Option::where('lid', $id)->pluck('result')->toArray();
-    	foreach($current as &$val) {
-    		$val = floatval($val / $students);
-    	}
-    	Option::where('lid', $id)->update(['result' => new Collection($current)]);
-    }
 }

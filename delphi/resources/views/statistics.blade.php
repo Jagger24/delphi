@@ -30,7 +30,7 @@
                             <td> {{ $key + 1}} </td>
                             <td> {{$option->name}} </td>
                             <td>{{$option->description}}</td>
-                            <td> {{$option->result}}</td>
+                            <td> {{$means[$key]}}</td>
                         </tr>
                     @endforeach 
                 @endif    
