@@ -65,6 +65,7 @@ class HomeController extends Controller
         $options = [];
        
         foreach(Option::getByListId($id) as $key => $option){
+            $options[$key]['id'] = $option->id;
             $options[$key]['name'] = $option->name;
             $options[$key]['description'] = $option->description;
         }
@@ -88,4 +89,53 @@ class HomeController extends Controller
         $list = Group::find($id);   
         return view('totalVoters', ['group'=>$list]);
     }
+
+
+
+//BELOW ARE THE DELETE METHODS
+    public function deleteList(Request $request, $code, $id){
+        $list = Group::getByListId($id);
+        HomeController::deleteListsOptions($list->id);
+        $list->delete();
+
+        return redirect('home');
+    }
+
+    public function deleteCode(Request $request, $code){
+        $session = Session::getByCode($code);
+        $lists = Group::getByCode($code);
+        foreach($lists as $list){
+            HomeController::deleteListsOptions($list->id);
+            $list->delete();
+        }
+        $session->delete();
+
+        return redirect('home');
+    }
+
+    public function deleteListsOptions($listId){
+
+        $options = Option::getByListId($listId);
+        foreach($options as $option){
+            $option->delete();
+        }
+
+    }
+
+    //method to delete individual 
+    public function deleteOption(Request $request, $code, $id, $name){
+
+        $option = Option::find($name);
+        
+        $option->delete();
+            
+
+        
+
+
+        return redirect('user/'.$code.'/'.$id.'/view');
+    }
+
+
+//END DELETE METHODS
 }

@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 class Option extends Model
 {
     public static function getByListId($id){
-    	return Option::select('name','description')->where('lid',$id)->get();
+    	return Option::where('lid',$id)->get();
 
     }
 
@@ -17,6 +17,6 @@ class Option extends Model
     }
 
     public static function resetResultField($id){
-    	Option::where('lid',$id)->update(array('result' => 0));
+    	Option::where('lid',$id)->update(array('result' => ""));
     }
 }

@@ -45,7 +45,7 @@
                     <th> List Name </th>
                     <th> Create/View List </th>
                     <th> Active </th>
-                    <th> Remaining Time </th>
+                    <th> Delete </th>
                     <th> View Stats </th>
                 </thead>
                 <tbody>
@@ -57,7 +57,7 @@
                             <td></td>
                             <td> <a href="user/{{ $sessioned['code'] }}/create"><button class="btn btn-primary" value="Create List">Create List</button> </td>
                             <td></td>
-                            <td></td>
+                            <td><a href="user/{{ $sessioned['code'] }}/delete" data-method="delete" data-token="{{csrf_token()}}" data-confirm="Are you sure?"><button class="btn btn-danger" value="Delete Code">Delete Code</button></td>
                             <td> -- </td>
                         </tr>
                     @if (array_key_exists("groups", $sessioned))
@@ -68,7 +68,7 @@
                                 <td>{{$group['name']}}</td>
                                 <td> <a href="user/{{ $sessioned['code'] }}/{{$group['id']}}/view"><button class="btn btn-danger" value="Create List">View List</button></td>
                                 <td> @if($group['active'] == 0) false @else true @endif</td>
-                                <td> HARD CODED N/A</td>
+                                <td> <a href="user/{{ $sessioned['code'] }}/{{$group['id']}}/delete" data-method="delete" data-token="{{csrf_token()}}" data-confirm="Are you sure?"><button class="btn btn-danger" value="Delete Code">Delete List</button></td>
                                 <td> <a href="group/{{ $sessioned['code'] }}/{{$group['id']}}"><button class="btn btn-danger" value="Create List">View Statistics</button> </td>
                             </tr>
 
@@ -80,4 +80,82 @@
         </div>
     </div>
 </div>
+
+
+ 
+<script>
+
+    //this script is to allow the functionality of a delete method with confirmations easily
+(function() {
+ 
+  var laravel = {
+    initialize: function() {
+      this.methodLinks = $('a[data-method]');
+      this.token = $('a[data-token]');
+      this.registerEvents();
+    },
+ 
+    registerEvents: function() {
+      this.methodLinks.on('click', this.handleMethod);
+    },
+ 
+    handleMethod: function(e) {
+      var link = $(this);
+      var httpMethod = link.data('method').toUpperCase();
+      var form;
+ 
+      // If the data-method attribute is not PUT or DELETE,
+      // then we don't know what to do. Just ignore.
+      if ( $.inArray(httpMethod, ['PUT', 'DELETE']) === - 1 ) {
+        return;
+      }
+ 
+      // Allow user to optionally provide data-confirm="Are you sure?"
+      if ( link.data('confirm') ) {
+        if ( ! laravel.verifyConfirm(link) ) {
+          return false;
+        }
+      }
+ 
+      form = laravel.createForm(link);
+      form.submit();
+ 
+      e.preventDefault();
+    },
+ 
+    verifyConfirm: function(link) {
+      return confirm(link.data('confirm'));
+    },
+ 
+    createForm: function(link) {
+      var form = 
+      $('<form>', {
+        'method': 'POST',
+        'action': link.attr('href')
+      });
+ 
+      var token = 
+      $('<input>', {
+        'type': 'hidden',
+        'name': '_token',
+        'value': link.data('token')
+        });
+ 
+      var hiddenInput =
+      $('<input>', {
+        'name': '_method',
+        'type': 'hidden',
+        'value': link.data('method')
+      });
+ 
+      return form.append(token, hiddenInput)
+                 .appendTo('body');
+    }
+  };
+ 
+  laravel.initialize();
+ 
+})();
+</script>
 @endsection
+

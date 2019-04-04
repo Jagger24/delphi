@@ -16,7 +16,7 @@ class Group extends Model
     }
 
     public static function getStudentsByCodeAndId($code, $id) {
-    	$num = Group::where('code', $code)->where('id', $id)->pluck('students');
+    	$num = Group::where('code', $code)->where('id', $id)->pluck('voted');
     	return $num;
     }
 
@@ -47,6 +47,11 @@ class Group extends Model
 		}else{
 			return null;
 		}
+	}
+
+	public static function getByListId($id){
+		$group = Group::where('id',$id)->get();
+		return $group->first();
 	}
 
 }

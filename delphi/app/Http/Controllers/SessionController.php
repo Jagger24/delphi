@@ -76,7 +76,7 @@ class SessionController extends Controller
             $new_option = new Option();
             $new_option->name = $option["name"];
             $new_option->description = $option["description"];
-            $new_option->result = 0;
+            $new_option->result = "";
             $new_option->lid = Group::getByNameAndCode($group->code, $group->name);
             $new_option->save();
         }
@@ -108,7 +108,12 @@ class SessionController extends Controller
             }
 
             for ($i = 0; $i < count($option_array); $i++) {
-                $means[$i] = $option_array[$i]->result / $num_students;
+                $arr = explode(",", $option_array[$i]->result);
+                $sum = 0;
+                for ($j = 0; $j < count($arr); $j++) {
+                    $sum += intval($arr[$i]);
+                }
+                $means[$i] = $sum / $num_students;
             }
 
             // since both arrays are sorted in ascending order and sorted 
@@ -124,7 +129,7 @@ class SessionController extends Controller
     }
 
     private function cmpResult($a, $b){
-        return $a->result > $b->result;
+        return array_sum(array_map('intval', explode(",", $a->result))) > array_sum(array_map('intval', explode(",", $a->result)));
     }
 
     public function votingPage($code, $lid){
@@ -150,7 +155,7 @@ class SessionController extends Controller
             foreach($request->request->all() as $key => $param){
                 if(is_numeric($key)){
                     $option = Option::find($key);
-                    $option->result = $option->result + $param;
+                    $option->result = ($option->result) ? $option->result . "," . $param : $param;
                     $option->save();
                 }
             }
@@ -158,8 +163,8 @@ class SessionController extends Controller
         }else{
             $message = "2";
         }
-
-        return view('waiting', ['group'=>$list, 'message'=>$message]);
+        $host = $request->getHttpHost();
+        return view('waiting', ['group'=>$list, 'message'=>$message, 'host'=>$host]);
     }
 
 }

@@ -21,6 +21,18 @@ Route::post('/contact','PageController@submitContact');
 
 Auth::routes();
 
+//Password reset routes
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset.token');
+
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.reset');
+
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
+
+
+
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/stats', 'StatsController@index')->name('stats');
 
@@ -38,6 +50,11 @@ Route::get('user/{sessionCode}/{id}/total-voters', 'HomeController@totalVoters')
 
 Route::get('user/{sessionCode}/{id}/view','HomeController@listView');
 Route::post('user/{sessionCode}/{id}/view','HomeController@listViewActivate');
+Route::delete('user/{sessionCode}/delete','HomeController@deleteCode');
+Route::delete('user/{sessionCode}/{groupId}/delete','HomeController@deleteList');
+
+Route::delete('/{sessionCode}/{groupId}/{name}/deleteOption', 'HomeController@deleteOption');
+
 
 Route::get('group/{sessionCode}/{id}','SessionController@statistics');
 Route::get('group/{sessioncode}/{id}/voting','SessionController@votingPage');
