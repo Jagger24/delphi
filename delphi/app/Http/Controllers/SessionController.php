@@ -97,7 +97,8 @@ class SessionController extends Controller
             $option_array = [];
             $means = [];
             $stats = [];
-
+            $percentage = [];
+            $elimination_votes = $list->voted * (intval(count($options) * .7));
             // number of students that are voting (used for calculating mean)
             // note that getStudentsBy... returns a Collection, so we have to use [0]
             $num_students = Group::getStudentsByCodeAndId($code, $lid)[0];
@@ -116,6 +117,7 @@ class SessionController extends Controller
                     $sum += intval($arr[$j]);
                 }
                 $means[$i] = $sum / $num_students;
+                $percentage[$i] = floatval($sum) / floatval($elimination_votes) * 100; 
 
                 // calculate standard deviation
                 // note: need to iterate over $arr again because we don't have the mean
@@ -125,27 +127,45 @@ class SessionController extends Controller
                 }
                     
                 $stats[$i] = [$means[$i], sqrt($sum_sqrs / $num_students)];
+                
             }
 
             // since both arrays are sorted in ascending order and sorted 
             // is divided by a constant, the result should be correct
-            usort($option_array, array($this,"cmpResult"));
-            usort($stats, array($this, "sortByMean"));
+            if($list->prioritization){
+                usort($option_array, array($this,"cmpResult"));
+                usort($stats, array($this, "sortByMean"));
+            }else{
+                usort($option_array, array($this,"cmpResultElim"));
+                usort($stats, array($this, "sortByPercentage"));
+                usort($percentage, array($this, "sortByPercentage"));
+            }
 
-            return view('statistics', ['sorted_options'=>$option_array, 'group'=>$list, 'stats'=>$stats]);
+            return view('statistics', ['sorted_options'=>$option_array, 'group'=>$list, 'stats'=>$stats, 'percentage'=>$percentage]);
 
         }else{
             return "List Does not exist";
         }
+
+
     }
 
     private function sortByMean($a, $b){
         return $a[0] > $b[0];
     }
 
+    private function sortByPercentage($a, $b){
+        return $a[0] < $b[0];
+    }
+
     private function cmpResult($a, $b){
         // compare the sum of the result field of $a and $b
         return array_sum(array_map('intval', explode(",", $a->result))) > array_sum(array_map('intval', explode(",", $b->result)));
+    }
+
+    private function cmpResultElim($a, $b){
+        // compare the sum of the result field of $a and $b
+        return array_sum(array_map('intval', explode(",", $a->result))) < array_sum(array_map('intval', explode(",", $b->result)));
     }
 
     public function votingPage($code, $lid){

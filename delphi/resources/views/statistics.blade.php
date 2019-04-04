@@ -8,12 +8,9 @@
     <div class="row justify-content-center">
         <h1 id="delphi_code_header"> Welcome To This Groups Statistics </h1>
     </div>
-<hr style="border-top:15px solid;"/>
+<hr style="border-top:15px solid;"/>		
 
-	<div class="row justify-content-center" style="font-size:30px;">
-	    INSERT SORTED OPTIONS HERE
-    </div>		
-
+    @if($group->prioritization)
     <div class="row justify-content-center">
         <div class="col-md-8">
             <table class="table table-hover table-bordered text-center">
@@ -39,11 +36,36 @@
             </table>
         </div>
     </div>
+    @else
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <table class="table table-hover table-bordered text-center">
+                    <thead class="table-dark"> 
+                        <th> Top Options </th>
+                        <th> Option Name </th>
+                        <th> Option Description </th>
+                        <th> Option Percentage </th>
+                        <th> Option Standard Deviation </th>
+                    </thead>
+                    <tbody>
+                    @if($sorted_options)
+                        @foreach($sorted_options as $key => $option)
+                            <tr>
+                                <td> {{$key + 1}} </td>
+                                <td> {{$option->name}} </td>
+                                <td> {{$option->description}} </td>
+                                <td> {{$percentage[$key]}} </td>
+                                <td> {{round($stats[$key][1], 3)}} </td>
+                            </tr>
+                        @endforeach 
+                    @endif    
+                </table>
+            </div>
+        </div>
 
+    @endif
 
 </div>
-<script>
-	//SOME SORTING METHOD HERE OR MAYBE IN BACKEND
-</script>
+
 @endsection
 
