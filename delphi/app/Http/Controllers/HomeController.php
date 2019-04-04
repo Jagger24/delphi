@@ -79,6 +79,7 @@ class HomeController extends Controller
         $list = Group::find($id);
         $list->students = $params['students'];
         $list->active = true;
+        $list->prioritization = $params['voting_method'] ? true : false;
         $list->voted = 0;
         $list->save();
         Option::resetResultField($id);

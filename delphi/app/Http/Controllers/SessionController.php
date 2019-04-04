@@ -63,7 +63,8 @@ class SessionController extends Controller
         $group = new Group();
         $group->code = $params["joinCode"];
         $group->name = $params["name"];
-        $group->active = ($params["active"]) ? true : false;
+        $group->active = false;
+        $group->prioritization = false;
         $group->students = 0;
 
         if($group->save()){
@@ -153,7 +154,8 @@ class SessionController extends Controller
         if($list){
             $options = Option::getOptionsByListId($list->id);
 
-            return view('votingPage', ['options'=>$options, 'group'=>$list]);
+            $votingCount = intval(count($options) * .7);
+            return view('votingPage', ['options'=>$options, 'group'=>$list, 'votingCount' =>$votingCount]);
         }
 
         return "List Does not exist";

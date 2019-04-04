@@ -25,6 +25,14 @@
     					</div>
   					</div>
 
+            <div class="form-group">
+              <div class="col-sm-10">
+                <label class="control-label col-sm-5" for="voting_method">Method of Voting:</label>
+                  <input type="radio"  name="voting_method" id="votingmethod" checked="checked" value="true">Prioritization
+                  <input type="radio"  name="voting_method" id="votingmethod2" value="">Elimination
+              </div>
+            </div>
+
   					<div class="form-group">
     					<div class="col-sm-10">
     						<label class="control-label col-sm-5">Activate List</label>

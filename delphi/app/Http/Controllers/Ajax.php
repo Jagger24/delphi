@@ -26,7 +26,9 @@ class Ajax extends Controller
 
     	$list = Group::find($request->get('listId'));
     	$complete = ($list->voted >= $list->students) ? true: false;
-
+        if($list->active == false){
+            $complete = true;
+        }
     	$response = array(
 			'status' => 'success',
 			'complete' => $complete
