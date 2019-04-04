@@ -21,16 +21,18 @@
                     <th> Priority </th>
                     <th> Option Name </th>
                     <th> Option Description </th>
-                    <th> Option Result </th>
+                    <th> Option Mean </th>
+                    <th> Option Standard Deviation </th>
                 </thead>
                 <tbody>
                 @if($sorted_options)
                     @foreach($sorted_options as $key => $option)
                         <tr>
-                            <td> {{ $key + 1}} </td>
+                            <td> {{$key + 1}} </td>
                             <td> {{$option->name}} </td>
-                            <td>{{$option->description}}</td>
-                            <td> {{$means[$key]}}</td>
+                            <td> {{$option->description}} </td>
+                            <td> {{round($stats[$key][0], 3)}} </td>
+                            <td> {{round($stats[$key][1], 3)}} </td>
                         </tr>
                     @endforeach 
                 @endif    

@@ -98,6 +98,7 @@ class SessionController extends Controller
 
             $option_array = [];
             $means = [];
+            $stats = [];
 
             // number of students that are voting (used for calculating mean)
             // note that getStudentsBy... returns a Collection, so we have to use [0]
@@ -110,26 +111,43 @@ class SessionController extends Controller
             for ($i = 0; $i < count($option_array); $i++) {
                 $arr = explode(",", $option_array[$i]->result);
                 $sum = 0;
+                $sum_sqrs = 0; // sum (xi - u)^2
+
+                // calculate mean
                 for ($j = 0; $j < count($arr); $j++) {
-                    $sum += intval($arr[$i]);
+                    $sum += intval($arr[$j]);
                 }
                 $means[$i] = $sum / $num_students;
+
+                // calculate standard deviation
+                // note: need to iterate over $arr again because we don't have the mean
+                // during the first iteration, which is needed to calculate std dev
+                for ($j = 0; $j < count($arr); $j++) {
+                    $sum_sqrs += ($arr[$j] - $means[$i]) * ($arr[$j] - $means[$i]);
+                }
+                    
+                $stats[$i] = [$means[$i], sqrt($sum_sqrs / $num_students)];
             }
 
             // since both arrays are sorted in ascending order and sorted 
             // is divided by a constant, the result should be correct
             usort($option_array, array($this,"cmpResult"));
-            sort($means);
+            usort($stats, array($this, "sortByMean"));
 
-            return view('statistics', ['sorted_options'=>$option_array, 'group'=>$list, 'means'=>$means]);
+            return view('statistics', ['sorted_options'=>$option_array, 'group'=>$list, 'stats'=>$stats]);
 
         }else{
             return "List Does not exist";
         }
     }
 
+    private function sortByMean($a, $b){
+        return $a[0] > $b[0];
+    }
+
     private function cmpResult($a, $b){
-        return array_sum(array_map('intval', explode(",", $a->result))) > array_sum(array_map('intval', explode(",", $a->result)));
+        // compare the sum of the result field of $a and $b
+        return array_sum(array_map('intval', explode(",", $a->result))) > array_sum(array_map('intval', explode(",", $b->result)));
     }
 
     public function votingPage($code, $lid){
