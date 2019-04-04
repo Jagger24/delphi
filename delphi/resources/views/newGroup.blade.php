@@ -31,26 +31,6 @@
       						<input type="text" class="form-control" name="name" id="listname" required placeholder="Name of List">
     					</div>
   					</div>
-  					<div class="form-group">
-    					<label class="control-label col-sm-5" for="max_student">Number of students for list:</label>
-    					<div class="col-sm-10">
-      						<input type="number" clazss="form-control" min="0" name="students" id="maxstudent" required placeholder="Number of students for list">
-    					</div>
-  					</div>
-
-
-  					<div class="form-group">
-    					<label class="control-label col-sm-5" for="active">Start Voting immediateltly after list creation?</label>
-      						<input class="toggle-method-show" type="radio"  name="active" value="true" >Yes
-      						<input class="toggle-method-hide" type="radio" name="active" value="" checked="checked">No
-  					</div>
-
-  					<div class="form-group display-none">
-    					<label class="control-label col-sm-5" for="voting_method">Delphi Method Type:</label>
-      						<input type="radio"  name="voting_method" value="prioritization" >Prioritization
-      						<input type="radio" name="voting_method" value="elimination" checked="checked">Elimination
-  					</div>
-
 
   					<div class="inject-options">
 	  					<div class="form-group">
@@ -108,13 +88,6 @@
 		});
 
 
-	});
-
-	$('.toggle-method-hide').click(function() {
-		$('.display-none').hide();
-	});
-	$('.toggle-method-show').click(function() {
-		$('.display-none').show();
 	});
 	
 </script>	

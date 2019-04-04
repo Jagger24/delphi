@@ -64,7 +64,7 @@ class SessionController extends Controller
         $group->code = $params["joinCode"];
         $group->name = $params["name"];
         $group->active = ($params["active"]) ? true : false;
-        $group->students = $params["students"];
+        $group->students = 0;
 
         if($group->save()){
 
@@ -81,11 +81,8 @@ class SessionController extends Controller
             $new_option->save();
         }
 
-        if($group->active=="true"){
-            return "got to voting";//some voting route;
-        }else{
-            return redirect()->action('HomeController@index');
-        }
+            return redirect('user/' . $group->code . '/'.$group->id.'/view');
+
     }
 
     public function statistics($code, $lid){
