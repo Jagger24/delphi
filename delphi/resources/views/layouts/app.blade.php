@@ -57,12 +57,7 @@
                     <li> <a href="{{ route('stats') }}"> <span class="glyphicon glyphicon-stats"></span> Stats </a> </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-left">
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span> Account </a>
-                        <ul class="dropdown-menu">
-                            <li> <a href=""> Delete Account </a></li>
-                        </ul>
-                    </li>
+                    <li> <a href="{{ route('profile') }}"> <span class="glyphicon glyphicon-user"></span> Profile </a> </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
