@@ -65,12 +65,10 @@ class SessionController extends Controller
         $group->name = $params["name"];
         $group->active = false;
         $group->prioritization = false;
+        $group->method = false;
         $group->students = 0;
 
         if($group->save()){
-
-        } else {
-            //@TODO SOME ERROR HERE
         }
 
         foreach($params["option"] as $option){
@@ -78,6 +76,7 @@ class SessionController extends Controller
             $new_option->name = $option["name"];
             $new_option->description = $option["description"];
             $new_option->result = "";
+            $new_option->enabled = true;
             $new_option->lid = Group::getByNameAndCode($group->code, $group->name);
             $new_option->save();
         }
@@ -95,7 +94,6 @@ class SessionController extends Controller
             $options = Option::getOptionsByListId($list->id);
 
             $option_array = [];
-            $means = [];
             $stats = [];
             $percentage = [];
             $elimination_votes = $list->voted * (intval(count($options) * .7));
@@ -116,23 +114,24 @@ class SessionController extends Controller
                 for ($j = 0; $j < count($arr); $j++) {
                     $sum += intval($arr[$j]);
                 }
-                $means[$i] = $sum / $num_students;
+                $mean = $sum / $num_students;
                 $percentage[$i] = floatval($sum) / floatval($elimination_votes) * 100; 
 
                 // calculate standard deviation
                 // note: need to iterate over $arr again because we don't have the mean
                 // during the first iteration, which is needed to calculate std dev
                 for ($j = 0; $j < count($arr); $j++) {
-                    $sum_sqrs += ($arr[$j] - $means[$i]) * ($arr[$j] - $means[$i]);
+                    $sum_sqrs += ($arr[$j] - $mean) * ($arr[$j] - $mean);
                 }
                     
-                $stats[$i] = [$means[$i], sqrt($sum_sqrs / $num_students)];
+                $stats[$i] = [$mean, sqrt($sum_sqrs / $num_students)];
                 
             }
+            $owner = (\Auth::user()->id == $list->uid) ? true : false;
 
             // since both arrays are sorted in ascending order and sorted 
             // is divided by a constant, the result should be correct
-            if($list->prioritization){
+            if($list->method){
                 usort($option_array, array($this,"cmpResult"));
                 usort($stats, array($this, "sortByMean"));
             }else{
@@ -141,7 +140,7 @@ class SessionController extends Controller
                 usort($percentage, array($this, "sortByPercentage"));
             }
 
-            return view('statistics', ['sorted_options'=>$option_array, 'group'=>$list, 'stats'=>$stats, 'percentage'=>$percentage]);
+            return view('statistics', ['sorted_options'=>$option_array, 'group'=>$list, 'stats'=>$stats, 'percentage'=>$percentage, 'elimination_votes'=>$elimination_votes, 'owner'=>$owner]);
 
         }else{
             return "List Does not exist";
@@ -172,7 +171,11 @@ class SessionController extends Controller
         $list = Group::find($lid);
 
         if($list){
-            $options = Option::getOptionsByListId($list->id);
+            if($list->prioritization) {
+                $options = Option::getOptionsByListId($list->id);
+            } else {
+                $options = Option::getEnabledOptionsByListId($list->id);
+            }
 
             $votingCount = intval(count($options) * .7);
             return view('votingPage', ['options'=>$options, 'group'=>$list, 'votingCount' =>$votingCount]);

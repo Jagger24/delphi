@@ -57,3 +57,11 @@
 .display-none{
 	display:none;
 }
+
+#total-voters-page .grayed{
+	background-color: #A9A9A9;
+}
+
+#total-voters-page .highlighted{
+	background-color: #FFFF33;
+}

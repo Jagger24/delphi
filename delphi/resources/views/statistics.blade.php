@@ -24,7 +24,10 @@
                 <tbody>
                 @if($sorted_options)
                     @foreach($sorted_options as $key => $option)
-                        <tr>
+                        <?php $classes = '' ?>
+                        @if($stats[$key][0] >= 2) <?php $classes = 'grayed' ?> @endif
+                        @if($stats[$key][1] >= 1) <?php $classes = 'grayed highlighted' ?> @endif
+                        <tr class='{{$classes}}'>
                             <td> {{$key + 1}} </td>
                             <td> {{$option->name}} </td>
                             <td> {{$option->description}} </td>
@@ -50,6 +53,9 @@
                     <tbody>
                     @if($sorted_options)
                         @foreach($sorted_options as $key => $option)
+                            <?php $classes = '' ?>
+                            @if($elimination_votes < $key + 1) <?php $classes = 'grayed' ?> @endif
+                            @if($stats[$key][1] >= 1) <?php $classes = 'grayed highlighted' ?> @endif
                             <tr>
                                 <td> {{$key + 1}} </td>
                                 <td> {{$option->name}} </td>

@@ -25,11 +25,19 @@
     					</div>
   					</div>
 
-            <div class="form-group">
+             <div class="form-group">
               <div class="col-sm-10">
-                <label class="control-label col-sm-5" for="voting_method">Method of Voting:</label>
+                <label class="control-label col-sm-5" for="voting_method">Method of Sorting:</label>
                   <input type="radio"  name="voting_method" id="votingmethod" checked="checked" value="true">Prioritization
                   <input type="radio"  name="voting_method" id="votingmethod2" value="">Elimination
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-sm-10">
+                <label class="control-label col-sm-5" for="voting_style">Method of Voting:</label>
+                  <input type="radio"  name="voting_style" id="votingstyle" checked="checked" value="true">Each student picks 1 - 3 for each option
+                  <input type="radio"  name="voting_style" id="votingstyle2" value="">Each student gets 70%
               </div>
             </div>
 

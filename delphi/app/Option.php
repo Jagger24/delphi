@@ -9,7 +9,10 @@ class Option extends Model
 {
     public static function getByListId($id){
     	return Option::where('lid',$id)->get();
+    }
 
+    public static function getEnabledByListId($id){
+    	return Option::where('lid',$id)->where('enabled',true)->get();
     }
 
     public static function getOptionsByListId($id){
