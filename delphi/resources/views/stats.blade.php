@@ -26,7 +26,7 @@
 				</div>
 			@endforeach
 		@else
-			<h2> Currently you have no Delphi Codes to keep track of statistis </h2>
+			<h2> Currently, you have no Delphi Codes to keep track of statistics. </h2>
 		@endif
 	</div>
 @endsection
