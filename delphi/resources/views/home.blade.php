@@ -2,7 +2,6 @@
 
 @section('content')
 <div id="user-dashboard" class="container">
-
     <!-- Welcome messag to user -->
     <div class="row justify-content-center">
         <h2 id="welcome-header">Welcome back, <?= Auth::user()->name ?> </h2>
