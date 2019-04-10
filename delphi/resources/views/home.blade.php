@@ -45,7 +45,6 @@
                     <th> Create/View List </th>
                     <th> Active </th>
                     <th> Delete </th>
-                    <th> View Stats </th>
                 </thead>
                 <tbody>
                 @if($infoArray)
@@ -57,7 +56,6 @@
                             <td> <a href="user/{{ $sessioned['code'] }}/create"><button class="btn btn-primary" value="Create List">Create List</button> </td>
                             <td></td>
                             <td><a href="user/{{ $sessioned['code'] }}/delete" data-method="delete" data-token="{{csrf_token()}}" data-confirm="Are you sure?"><button class="btn btn-danger" value="Delete Code">Delete Code</button></td>
-                            <td> -- </td>
                         </tr>
                     @if (array_key_exists("groups", $sessioned))
                         @foreach($sessioned['groups'] as $group)
@@ -66,11 +64,9 @@
                                 <td> {{$sessioned['code']}} </td>
                                 <td>{{$group['name']}}</td>
                                 <td> <a href="user/{{ $sessioned['code'] }}/{{$group['id']}}/view"><button class="btn btn-danger" value="Create List">View List</button></td>
-                                <td> @if($group['active'] == 0) false @else true @endif</td>
+                                <td> @if($group['active'] == 0) Not Active @else Active @endif</td>
                                 <td> <a href="user/{{ $sessioned['code'] }}/{{$group['id']}}/delete" data-method="delete" data-token="{{csrf_token()}}" data-confirm="Are you sure?"><button class="btn btn-danger" value="Delete Code">Delete List</button></td>
-                                <td> <a href="group/{{ $sessioned['code'] }}/{{$group['id']}}"><button class="btn btn-danger" value="Create List">View Statistics</button> </td>
                             </tr>
-
                         @endforeach
                     @endif
                     @endforeach 
