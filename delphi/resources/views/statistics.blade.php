@@ -105,7 +105,7 @@
                     <div class="form-group">
                         <div class="col-sm-10">
                             <label class="control-label" for="max_student">Number of students for list:</label>
-                            <input type="number" class="form-control" min="0" name="students" id="maxstudent" required placeholder="Number of students for list">
+                            <input type="number" class="form-control" min="0" name="students" id="maxstudent" value="{{$group->students}}" required placeholder="{{$group->students}}">
                         </div>
                     </div>
 
