@@ -67,7 +67,6 @@
                                 <td> @if($group['active'] == 0) Not Active @else Active @endif</td>
                                 <td> <a href="user/{{ $sessioned['code'] }}/{{$group['id']}}/delete" data-method="delete" data-token="{{csrf_token()}}" data-confirm="Are you sure?"><button class="btn btn-danger" value="Delete Code">Delete List</button></td>
                             </tr>
-
                         @endforeach
                     @endif
                     @endforeach 
