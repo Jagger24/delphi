@@ -17,7 +17,8 @@
     </div>
 <hr style="border-top:15px solid;"/>	
 
-
+<form class="form-horizontal" action="/group/{{$group->code}}/{{$group->id}}/" method="POST">
+    {{ csrf_field() }}
     @if($group->prioritization)
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -82,7 +83,8 @@
                                 <td> {{round($stats[$key][1], 3)}} </td>
                             </tr>
                         @endforeach 
-                    @endif    
+                    @endif  
+                    </tbody>  
                 </table>
             </div>
         </div>
@@ -90,6 +92,11 @@
     @endif
 
 </div>
+
+
+<button type="submit" class="btn btn-primary">Start re-vote</button>
+
+</form>
 
 @endsection
 

@@ -155,6 +155,11 @@ class SessionController extends Controller
 
     }
 
+    public function statisticsPost($code, $lid){
+
+        var_dump("here");die;
+    }
+
     private function sortByMean($a, $b){
         return $a[0] > $b[0];
     }
