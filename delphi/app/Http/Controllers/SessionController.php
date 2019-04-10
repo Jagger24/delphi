@@ -195,7 +195,7 @@ class SessionController extends Controller
             foreach($request->request->all() as $key => $param){
                 if(is_numeric($key)){
                     $option = Option::find($key);
-                    $option->result = ($option->result) ? $option->result . "," . $param : $param;
+                    $option->result = ($option->result != "") ? $option->result . "," . $param : $param;
                     $option->save();
                 }
             }
