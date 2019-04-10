@@ -41,7 +41,7 @@
 			success: function(data){
 				console.log(data);
 				if(data.complete){
-					window.location.replace("{{$host}}/group/{{$group->code}}/{{$group->id}}")
+					$(location).attr('href', '{{$host}}/group/{{$group->code}}/{{$group->id}}');
 				}
 			},
 			error: function(){
