@@ -61,7 +61,7 @@
                     <th> Option Name </th>
                     <th> Option Description </th>
                     <th> Delete Option </th>
-                    <th> Enabled </th>
+                    <th> Enable Option </th>
                 </thead>
                 <tbody>
                     @foreach($options as $key => $option)
@@ -69,10 +69,10 @@
                         <tr>
                             <td> {{$key + 1}} </td>
                             <td> {{$option['name']}} </td>
-                            <td>{{$option['description']}}</td>
+                            <td> {{$option['description']}} </td>
                             <td><a href="/{{ $code }}/{{ $id }}/{{ $option['id'] }}/deleteOption"  data-method="delete" data-token="{{csrf_token()}}" data-confirm="Are you sure?"><button class="btn btn-danger" value="Delete Option">Delete Option</button></td>
                             <!-- made it a button for now, might want to switch to checkbox -->
-                            <td><a href=""><button class='btn btn-secondary'>Enable Option</button></a></td>
+                            <td>@if(!$option['enabled'])<a href=""><button class='btn btn-secondary'>Enable Option</button></a>@endif</td>
                     @endforeach
 
                 </tbody>

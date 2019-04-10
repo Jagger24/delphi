@@ -68,6 +68,7 @@ class HomeController extends Controller
             $options[$key]['id'] = $option->id;
             $options[$key]['name'] = $option->name;
             $options[$key]['description'] = $option->description;
+            $options[$key]['enabled'] = $option->enabled;
         }
         return view('listView', ['options'=>$options, 'code'=>$code, 'id'=>$id]);
 
