@@ -93,8 +93,50 @@
 
 </div>
 
+
 @if($owner)
-    <button type="submit" class="btn btn-primary">Start re-vote</button>
+    <div class="container">
+        <hr style="border-top:15px solid;"/>
+        <div class="card">
+            <div class="card-header">
+                New List Form
+            </div>
+            <div class="card-body" style="horizontal-align:center">
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <label class="control-label" for="max_student">Number of students for list:</label>
+                            <input type="number" class="form-control" min="0" name="students" id="maxstudent" required placeholder="Number of students for list">
+                        </div>
+                    </div>
+
+             <div class="form-group">
+              <div class="col-sm-10">
+                <label class="control-label col-sm-5" for="voting_method">Method of Sorting:</label>
+                  <input type="radio"  name="voting_method" id="votingmethod" checked="checked" value="true">Prioritization
+                  <input type="radio"  name="voting_method" id="votingmethod2" value="">Elimination
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-sm-10">
+                <label class="control-label col-sm-5" for="voting_style">Method of Voting:</label>
+                  <input type="radio"  name="voting_style" id="votingstyle" checked="checked" value="true">Each student picks 1 - 3 for each option
+                  <input type="radio"  name="voting_style" id="votingstyle2" value="">Each student gets 70%
+              </div>
+            </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-primary">Start re-vote</button>
+                        </div>
+                    </div>
+
+                </form> 
+            </div>
+        </div>
+    </div>
+
+    
 @endif
 
 </form>
