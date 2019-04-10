@@ -155,9 +155,10 @@ class SessionController extends Controller
 
     }
 
-    public function statisticsPost($code, $lid){
+    public function statisticsPost($code, $lid, Request $request){
 
-        var_dump("here");die;
+        var_dump($request->request->all());die;
+        $params = $request->request->all();
     }
 
     private function sortByMean($a, $b){

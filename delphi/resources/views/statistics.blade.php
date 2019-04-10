@@ -35,9 +35,9 @@
                     @foreach($sorted_options as $key => $option)
                         <?php $classes = '' ?>
                         @if($stats[$key][0] >= 2) <?php $classes = 'grayed' ?> 
-                            <input hidden name="option[{{$key}}]" type='radio'>
+                            <input hidden id="option{{$option->id}}" name="option[{{$key}}]" type='radio' value='0' checked='checked'>
                         @else
-                            <input hidden name="option[{{$key}}]" type='radio' checked='checked'>
+                            <input hidden id="option{{$option->id}}" name="option[{{$key}}]" type='radio' value='1' checked='checked'>
                         
                         @endif
                         @if($stats[$key][1] >= 1) <?php $classes = 'grayed highlighted' ?> @endif
@@ -70,9 +70,9 @@
                         @foreach($sorted_options as $key => $option)
                             <?php $classes = '' ?>
                             @if($elimination_votes < $key + 1) <?php $classes = 'grayed' ?> 
-                                 <input hidden name="option[{{$key}}]" type='radio'>
+                                 <input hidden id="option{{$option->id}}" name="option[{{$key}}]" type='radio' value='0' checked='checked'>
                             @else
-                                <input hidden name="option[{{$key}}]" type='radio' checked='checked'>
+                                <input hidden id="option{{$option->id}}" name="option[{{$key}}]" type='radio' type='radio' value='1' checked='checked'>
                             @endif
                             @if($stats[$key][1] >= 1) <?php $classes = 'grayed highlighted' ?> @endif
                             <tr class = '{{$classes}}' id="option{{$option->id}}">
@@ -93,10 +93,27 @@
 
 </div>
 
-
-<button type="submit" class="btn btn-primary">Start re-vote</button>
+@if($owner)
+    <button type="submit" class="btn btn-primary">Start re-vote</button>
+@endif
 
 </form>
 
+@if($owner)
+    <script>
+        $('tr.cursor').click(function(){
+            let currentval = $('input#' + this.id).val();
+            let newval = 2;
+            if(currentval === '1'){
+                newval = 0;
+                $('tr#' + this.id).addClass('grayed');
+            }else{
+                newval = 1;
+                $('tr#' + this.id).removeClass('grayed');
+            }
+            $('input#' + this.id).val(newval);
+        });
+    </script>
+@endif
 @endsection
 
