@@ -11,7 +11,7 @@ class Option extends Model
     	return Option::where('lid',$id)->get();
     }
 
-    public static function getEnabledByListId($id){
+    public static function getEnabledOptionsByListId($id){
     	return Option::where('lid',$id)->where('enabled',true)->get();
     }
 
