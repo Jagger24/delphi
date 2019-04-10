@@ -3,12 +3,20 @@
 @section('content')
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
+    @if($owner)
+    <style>
+        .cursor{
+            cursor:pointer;
+        }
+    </style>
+    @endif
 
 <div id="total-voters-page" class="container">
     <div class="row justify-content-center">
         <h1 id="delphi_code_header"> Welcome To This Groups Statistics </h1>
     </div>
-<hr style="border-top:15px solid;"/>		
+<hr style="border-top:15px solid;"/>	
+
 
     @if($group->prioritization)
     <div class="row justify-content-center">
@@ -25,9 +33,15 @@
                 @if($sorted_options)
                     @foreach($sorted_options as $key => $option)
                         <?php $classes = '' ?>
-                        @if($stats[$key][0] >= 2) <?php $classes = 'grayed' ?> @endif
+                        @if($stats[$key][0] >= 2) <?php $classes = 'grayed' ?> 
+                            <input hidden name="option[{{$key}}]" type='radio'>
+                        @else
+                            <input hidden name="option[{{$key}}]" type='radio' checked='checked'>
+                        
+                        @endif
                         @if($stats[$key][1] >= 1) <?php $classes = 'grayed highlighted' ?> @endif
-                        <tr class='{{$classes}}' id="option{{$option->id}}">
+                        
+                        <tr class='{{$classes}} cursor' id="option{{$option->id}}">
                             <td> {{$key + 1}} </td>
                             <td> {{$option->name}} </td>
                             <td> {{$option->description}} </td>
@@ -54,7 +68,11 @@
                     @if($sorted_options)
                         @foreach($sorted_options as $key => $option)
                             <?php $classes = '' ?>
-                            @if($elimination_votes < $key + 1) <?php $classes = 'grayed' ?> @endif
+                            @if($elimination_votes < $key + 1) <?php $classes = 'grayed' ?> 
+                                 <input hidden name="option[{{$key}}]" type='radio'>
+                            @else
+                                <input hidden name="option[{{$key}}]" type='radio' checked='checked'>
+                            @endif
                             @if($stats[$key][1] >= 1) <?php $classes = 'grayed highlighted' ?> @endif
                             <tr class = '{{$classes}}' id="option{{$option->id}}">
                                 <td> {{$key + 1}} </td>

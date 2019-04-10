@@ -127,8 +127,14 @@ class SessionController extends Controller
                 $stats[$i] = [$mean, sqrt($sum_sqrs / $num_students)];
                 
             }
-            $owner = (\Auth::user()->id == $list->uid) ? true : false;
 
+            $session = Session::getByCode($list->code);
+            // dd(\Auth::guest());
+            if(!\Auth::guest()){
+            $owner = (\Auth::user()->id == $session->uid) ? true : false;
+            }else{
+                $owner = false;
+            }
             // since both arrays are sorted in ascending order and sorted 
             // is divided by a constant, the result should be correct
             if($list->method){
