@@ -56,11 +56,11 @@
                             <?php $classes = '' ?>
                             @if($elimination_votes < $key + 1) <?php $classes = 'grayed' ?> @endif
                             @if($stats[$key][1] >= 1) <?php $classes = 'grayed highlighted' ?> @endif
-                            <tr>
+                            <tr class = '{{$classes}}'>
                                 <td> {{$key + 1}} </td>
                                 <td> {{$option->name}} </td>
                                 <td> {{$option->description}} </td>
-                                <td> {{$percentage[$key]}} </td>
+                                <td> {{round($percentage[$key], 3)}} </td>
                                 <td> {{round($stats[$key][1], 3)}} </td>
                             </tr>
                         @endforeach 

@@ -92,7 +92,7 @@
     <script>
 	$("input").change(function(){
 		var sum = 0;
-		$("input[type="number"]").each(function(){
+		$("input[type='number']").each(function(){
 			sum += Number($(this).val());
 			console.log(sum);
 		});
