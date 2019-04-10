@@ -85,12 +85,22 @@ class SessionController extends Controller
 
     }
 
-    public function statistics($code, $lid){
+    public function statistics($code, $lid, Request $request){
         $list = Group::find($lid);
 
+        $session = Session::getByCode($list->code);
+        if(!\Auth::guest()){
+            $owner = (\Auth::user()->id == $session->uid) ? true : false;
+        }else{
+                $owner = false;
+        }
+
         if($list){
-            $list->active = false;
-            $list->save();
+            if($owner){
+                $list->active = false;
+            
+                $list->save();
+            }
             $options = Option::getOptionsByListId($list->id);
 
             $option_array = [];
@@ -114,27 +124,23 @@ class SessionController extends Controller
                 for ($j = 0; $j < count($arr); $j++) {
                     $sum += intval($arr[$j]);
                 }
-                $mean = $sum / $num_students;
-                $percentage[$i] = floatval($sum) / floatval($elimination_votes) * 100; 
+                $mean = ($num_students > 0) ? $sum / $num_students : 0;
+                $percentage[$i] = ($elimination_votes > 0) ? floatval($sum) / floatval($elimination_votes) * 100 : 0; 
 
                 // calculate standard deviation
                 // note: need to iterate over $arr again because we don't have the mean
                 // during the first iteration, which is needed to calculate std dev
                 for ($j = 0; $j < count($arr); $j++) {
-                    $sum_sqrs += ($arr[$j] - $mean) * ($arr[$j] - $mean);
+                    
+                   ($arr[$j] != '') ?  $sum_sqrs += ($arr[$j] - $mean) * ($arr[$j] - $mean) : $sum_sqrs = 0;
+
                 }
                     
-                $stats[$i] = [$mean, sqrt($sum_sqrs / $num_students)];
+                $stats[$i] = [$mean, ($num_students > 0 ) ? sqrt($sum_sqrs / $num_students) : 0];
                 
             }
 
-            $session = Session::getByCode($list->code);
-            // dd(\Auth::guest());
-            if(!\Auth::guest()){
-            $owner = (\Auth::user()->id == $session->uid) ? true : false;
-            }else{
-                $owner = false;
-            }
+
             // since both arrays are sorted in ascending order and sorted 
             // is divided by a constant, the result should be correct
             if($list->method){
@@ -146,7 +152,9 @@ class SessionController extends Controller
                 usort($percentage, array($this, "sortByPercentage"));
             }
 
-            return view('statistics', ['sorted_options'=>$option_array, 'group'=>$list, 'stats'=>$stats, 'percentage'=>$percentage, 'elimination_votes'=>$elimination_votes, 'owner'=>$owner]);
+            $host = $request->getHttpHost();
+
+            return view('statistics', ['sorted_options'=>$option_array, 'group'=>$list, 'stats'=>$stats, 'percentage'=>$percentage, 'elimination_votes'=>$elimination_votes, 'owner'=>$owner, 'host'=>$host]);
 
         }else{
             return "List Does not exist";
@@ -156,10 +164,23 @@ class SessionController extends Controller
     }
 
     public function statisticsPost($code, $lid, Request $request){
-
-        var_dump($request->request->all());die;
         $params = $request->request->all();
-        
+        $list = Group::find($lid);
+        $list->active = true;
+        $list->prioritization = ($params['voting_method']) ? true :false;
+        $list->method = ($params['voting_style']) ? true : false;
+        $list->voted = 0;
+        $list->save();
+        Option::resetResultField($lid);
+        foreach($params['option'] as $key => $optionVal ){
+            $option = Option::find($key);
+            $option->enabled = ($optionVal > 0) ? true : false;
+            $option->save;
+        }
+
+
+        return redirect('user/'.$code.'/'.$lid.'/total-voters')->with('group', $list);
+
     }
 
     private function sortByMean($a, $b){

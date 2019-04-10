@@ -37,7 +37,7 @@
               <div class="col-sm-10">
                 <label class="control-label col-sm-5" for="voting_style">Method of Voting:</label>
                   <input type="radio"  name="voting_style" id="votingstyle" checked="checked" value="true">Each student picks 1 - 3 for each option
-                  <input type="radio"  name="voting_style" id="votingstyle2" value="">Each student gets 70%
+                  <input type="radio"  name="voting_style" id="votingstyle2" value="0">Each student gets 70%
               </div>
             </div>
 

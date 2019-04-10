@@ -81,10 +81,11 @@ class HomeController extends Controller
         $list->students = $params['students'];
         $list->active = true;
         $list->prioritization = $params['voting_method'] ? true : false;
-        $list->method =$params['voting_method'] ? true : false;
+        $list->method =$params['voting_style'] ? true : false;
         $list->voted = 0;
         $list->save();
         Option::resetResultField($id);
+        Option::resetEnabledField($id);
         return redirect('user/'.$code.'/'.$id.'/total-voters')->with('group', $list);
     }
 

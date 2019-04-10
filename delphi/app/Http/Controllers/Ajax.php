@@ -36,4 +36,15 @@ class Ajax extends Controller
 
     	return response()->json($response);
     }
+
+    public function liveCheck(Request $request){
+
+        $list = Group::find($request->get('listId'));
+        $response = array(
+            'status' => 'success',
+            'complete' => $list->active
+        );
+
+        return response()->json($response);
+    }
 }

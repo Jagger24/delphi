@@ -22,4 +22,8 @@ class Option extends Model
     public static function resetResultField($id){
     	Option::where('lid',$id)->update(array('result' => ""));
     }
+
+    public static function resetOptionField($id){
+        Option::where('lid',$id)->update('enabled', true);
+    }
 }

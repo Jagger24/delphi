@@ -66,3 +66,4 @@ Route::post('group/{sessioncode}/{id}/voting', 'SessionController@saveVote')->na
 //AJAX CALLS FOR STUDENTS AND MAYBE STATS?
 Route::get('student-count-ajax','Ajax@studentCount');
 Route::get('stat-check','Ajax@statCheck');
+Route::get('live-check','Ajax@liveCheck');
