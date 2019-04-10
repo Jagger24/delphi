@@ -38,8 +38,10 @@
 			},
 			dataType: 'json',
 			success: function(data){
-				console.log(data);
 				$('#voted-students').html(data.students);
+				if(data.students == {{$group->students}}){
+					$('button').click();
+				}
 			},
 			error: function(data){
 				console.log('failed');
