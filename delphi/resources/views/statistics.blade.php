@@ -27,7 +27,7 @@
                         <?php $classes = '' ?>
                         @if($stats[$key][0] >= 2) <?php $classes = 'grayed' ?> @endif
                         @if($stats[$key][1] >= 1) <?php $classes = 'grayed highlighted' ?> @endif
-                        <tr class='{{$classes}}'>
+                        <tr class='{{$classes}}' id="option{{$option->id}}">
                             <td> {{$key + 1}} </td>
                             <td> {{$option->name}} </td>
                             <td> {{$option->description}} </td>
@@ -56,7 +56,7 @@
                             <?php $classes = '' ?>
                             @if($elimination_votes < $key + 1) <?php $classes = 'grayed' ?> @endif
                             @if($stats[$key][1] >= 1) <?php $classes = 'grayed highlighted' ?> @endif
-                            <tr class = '{{$classes}}'>
+                            <tr class = '{{$classes}}' id="option{{$option->id}}">
                                 <td> {{$key + 1}} </td>
                                 <td> {{$option->name}} </td>
                                 <td> {{$option->description}} </td>
