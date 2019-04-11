@@ -14,13 +14,13 @@
       <div class="form-group">
           <label class="col-md-18 control-label">Name:</label>
           <div class="col-md-18">
-            <input class="form-control" type="text" value="{{ $user->name }}">
+            <input class="form-control" type="text" value="{{ $user->name }}" readonly>
           </div>
       </div>
       <div class="form-group">
           <label class="col-md-18 control-label">Email:</label>
           <div class="col-md-18">
-            <input class="form-control" type="text" value="{{ $user->email }}">
+            <input class="form-control" type="text" value="{{ $user->email }}" readonly>
           </div>
       </div>
     </form>
