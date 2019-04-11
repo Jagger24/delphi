@@ -69,13 +69,13 @@
                     @if($sorted_options)
                         @foreach($sorted_options as $key => $option)
                             <?php $classes = '' ?>
-                            @if($elimination_votes < $key + 1) <?php $classes = 'grayed' ?> 
+                            @if($elimination_votes < $key + 1 || !$option->enabled) <?php $classes = 'grayed' ?> 
                                  <input hidden id="option{{$option->id}}" name="option[{{$option->id}}]" type='radio' value='0' checked='checked'>
                             @else
                                 <input hidden id="option{{$option->id}}" name="option[{{$option->id}}]" type='radio' type='radio' value='1' checked='checked'>
                             @endif
                             @if($stats[$key][1] >= 1) <?php $classes = 'grayed highlighted' ?> @endif
-                            <tr class = '{{$classes}}' id="option{{$option->id}}">
+                            <tr class = '{{$classes}} cursor' id="option{{$option->id}}">
                                 <td> {{$key + 1}} </td>
                                 <td> {{$option->name}} </td>
                                 <td> {{$option->description}} </td>
@@ -154,11 +154,16 @@
                 $('tr#' + this.id).removeClass('grayed');
             }
             $('input#' + this.id).val(newval);
+            console.log("made here");
         });
     </script>
 
 
 @else 
+
+    <a href="/group/{{ $group->code }}/{{ $group->id }}/voting" style="display:none;">
+        <button id="redirect" type="button" class="btn btn-secondary">END VOTING</button>
+    </a>
 
     <script>
         $(document).ready(function(){
@@ -176,8 +181,7 @@
                 success: function(data){
                     console.log(data.complete);
                     if(data.complete){
-                        
-                        $(location).attr('href', '{{$host}}/group/{{$group->code}}/{{$group->id}}/voting/');
+                        $('#redirect').click();
                     }
                 },
                 error: function(data){

@@ -107,6 +107,7 @@ class SessionController extends Controller
             $stats = [];
             $percentage = [];
             $elimination_votes = $list->voted * (intval(count($options) * .7));
+            $elimination_count = (intval(count($options) * .7));
             // number of students that are voting (used for calculating mean)
             // note that getStudentsBy... returns a Collection, so we have to use [0]
             $num_students = Group::getStudentsByCodeAndId($code, $lid)[0];
@@ -154,13 +155,11 @@ class SessionController extends Controller
 
             $host = $request->getHttpHost();
 
-            return view('statistics', ['sorted_options'=>$option_array, 'group'=>$list, 'stats'=>$stats, 'percentage'=>$percentage, 'elimination_votes'=>$elimination_votes, 'owner'=>$owner, 'host'=>$host]);
+            return view('statistics', ['sorted_options'=>$option_array, 'group'=>$list, 'stats'=>$stats, 'percentage'=>$percentage, 'elimination_votes'=>$elimination_count, 'owner'=>$owner, 'host'=>$host]);
 
         }else{
             return "List Does not exist";
         }
-
-
     }
 
     public function statisticsPost($code, $lid, Request $request){
@@ -175,9 +174,8 @@ class SessionController extends Controller
         foreach($params['option'] as $key => $optionVal ){
             $option = Option::find($key);
             $option->enabled = ($optionVal > 0) ? true : false;
-            $option->save;
+            $option->save();
         }
-
 
         return redirect('user/'.$code.'/'.$lid.'/total-voters')->with('group', $list);
 

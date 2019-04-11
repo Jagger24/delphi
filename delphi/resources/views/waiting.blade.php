@@ -22,6 +22,10 @@
     </div>
 <hr style="border-top:15px solid;"/>
 
+<a href="/group/{{ $group->code }}/{{ $group->id }}" style="display:none;">
+    <button id="redirect" type="button" class="btn btn-secondary">END VOTING</button>
+</a>
+
 
 
 
@@ -41,7 +45,7 @@
 			success: function(data){
 				console.log(data);
 				if(data.complete){
-					$(location).attr('href', '{{$host}}/group/{{$group->code}}/{{$group->id}}');
+					$('#redirect').click();
 				}
 			},
 			error: function(){
