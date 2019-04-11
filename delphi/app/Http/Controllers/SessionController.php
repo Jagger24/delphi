@@ -168,6 +168,7 @@ class SessionController extends Controller
         $list->active = true;
         $list->prioritization = ($params['voting_method']) ? true :false;
         $list->method = ($params['voting_style']) ? true : false;
+        $list->students = $params['students'];
         $list->voted = 0;
         $list->save();
         Option::resetResultField($lid);
