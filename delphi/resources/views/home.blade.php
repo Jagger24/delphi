@@ -48,15 +48,17 @@
                 </thead>
                 <tbody>
                 @if($infoArray)
+                    <?php $count = 1 ?>
                     @foreach($infoArray as $sessioned)
                         <tr>
-                            <td> {{$sessioned['id']}} </td>
+                            <td> <?php echo $count ?> </td>
                             <td> {{$sessioned['code']}} </td>
                             <td></td>
                             <td> <a href="user/{{ $sessioned['code'] }}/create"><button class="btn btn-primary" value="Create List">Create List</button> </td>
                             <td></td>
                             <td><a href="user/{{ $sessioned['code'] }}/delete" data-method="delete" data-token="{{csrf_token()}}" data-confirm="Are you sure?"><button class="btn btn-danger" value="Delete Code">Delete Code</button></td>
                         </tr>
+                        <?php $count++; ?>
                     @if (array_key_exists("groups", $sessioned))
                         @foreach($sessioned['groups'] as $group)
                             <tr>
