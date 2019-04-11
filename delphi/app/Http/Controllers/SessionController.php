@@ -82,7 +82,30 @@ class SessionController extends Controller
         }
 
             return redirect('user/' . $group->code . '/'.$group->id.'/view');
+    }
 
+    // calculate the mean of the comma-delimited string of numbers $nums
+    public static function mean($nums, $num_students) {
+        $arr = explode(",", $nums);
+        $sum = 0;
+        for ($j = 0; $j < count($arr); $j++) {
+            $sum += intval($arr[$j]);
+        }
+        // return 0 if no students (avoid div by 0)
+        $mean = ($num_students > 0) ? $sum / $num_students : 0;
+        return $mean;
+    }
+
+    // calculate the standard deviation of the comma-delimited string of numbers $nums
+    public static function std_dev($nums, $num_students, $mean) {
+        $sum_sqrs = 0; // sum (xi - u)^2
+        $arr = explode(",", $nums);
+        // note: need to iterate over $arr again because we don't have the mean
+        // during the first iteration, which is needed to calculate std dev
+        for ($j = 0; $j < count($arr); $j++) {
+           ($arr[$j] != '') ?  $sum_sqrs += ($arr[$j] - $mean) * ($arr[$j] - $mean) : $sum_sqrs = 0;
+        }
+        return ($num_students > 0 ) ? sqrt($sum_sqrs / $num_students) : 0;
     }
 
     public function statistics($code, $lid, Request $request){
@@ -92,7 +115,7 @@ class SessionController extends Controller
         if(!\Auth::guest()){
             $owner = (\Auth::user()->id == $session->uid) ? true : false;
         }else{
-                $owner = false;
+            $owner = false;
         }
 
         if($list){
@@ -117,30 +140,19 @@ class SessionController extends Controller
             }
 
             for ($i = 0; $i < count($option_array); $i++) {
+                $mean = SessionController::mean($option_array[$i]->result, $num_students);
+                $std_dev = SessionController::std_dev($option_array[$i]->result, $num_students, $mean);
+
+                // percentage calculation
                 $arr = explode(",", $option_array[$i]->result);
                 $sum = 0;
-                $sum_sqrs = 0; // sum (xi - u)^2
-
-                // calculate mean
                 for ($j = 0; $j < count($arr); $j++) {
                     $sum += intval($arr[$j]);
                 }
-                $mean = ($num_students > 0) ? $sum / $num_students : 0;
                 $percentage[$i] = ($elimination_votes > 0) ? floatval($sum) / floatval($elimination_votes) * 100 : 0; 
 
-                // calculate standard deviation
-                // note: need to iterate over $arr again because we don't have the mean
-                // during the first iteration, which is needed to calculate std dev
-                for ($j = 0; $j < count($arr); $j++) {
-                    
-                   ($arr[$j] != '') ?  $sum_sqrs += ($arr[$j] - $mean) * ($arr[$j] - $mean) : $sum_sqrs = 0;
-
-                }
-                    
-                $stats[$i] = [$mean, ($num_students > 0 ) ? sqrt($sum_sqrs / $num_students) : 0];
-                
+                $stats[$i] = [$mean, $std_dev];
             }
-
 
             // since both arrays are sorted in ascending order and sorted 
             // is divided by a constant, the result should be correct
