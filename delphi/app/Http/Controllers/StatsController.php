@@ -12,7 +12,7 @@ use Auth;
 class StatsController extends Controller
 {
     //
-	/**
+    /**
      * Create a new controller instance.
      * 
      * @return void
@@ -22,10 +22,10 @@ class StatsController extends Controller
         $this->middleware('auth');
     }
 
-	public function index(Request $request){
-		$user = Auth::user();
+    public function index(Request $request){
+        $user = Auth::user();
 
-		$sessions = Session::getByUserId($user->id);
+        $sessions = Session::getByUserId($user->id);
 
         $infoArray = [];
 
@@ -40,6 +40,6 @@ class StatsController extends Controller
             }
         }
         
-		return view('stats', ['user'=>$user, 'infoArray'=>$infoArray]);
-	}
+        return view('stats', ['user'=>$user, 'infoArray'=>$infoArray]);
+    }
 }

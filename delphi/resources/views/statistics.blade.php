@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
     @if($owner)
     <style>
@@ -15,11 +15,11 @@
     <div class="row justify-content-center">
         <h1 id="delphi_code_header"> Welcome To This Groups Statistics </h1>
     </div>
-<hr style="border-top:15px solid;"/>	
+<hr style="border-top:15px solid;"/>    
 
-<form class="form-horizontal" action="/group/{{$group->code}}/{{$group->id}}/" method="POST">
+<form class="form-horizontal" action="/group/{{$group->code}}/{{$group->id}}/stats-post" method="POST">
     {{ csrf_field() }}
-    @if($group->prioritization)
+@if($group->method)
     <div class="row justify-content-center">
         <div class="col-md-8">
             <table class="table table-hover table-bordered text-center">
@@ -33,22 +33,24 @@
                 <tbody>
                 @if($sorted_options)
                     @foreach($sorted_options as $key => $option)
-                        <?php $classes = '' ?>
-                        @if($stats[$key][0] >= 2) <?php $classes = 'grayed' ?> 
-                            <input hidden id="option{{$option->id}}" name="option[{{$option->id}}]" type='radio' value='0' checked='checked'>
-                        @else
-                            <input hidden id="option{{$option->id}}" name="option[{{$option->id}}]" type='radio' value='1' checked='checked'>
-                        
-                        @endif
-                        @if($stats[$key][1] >= 1) <?php $classes = 'grayed highlighted' ?> @endif
-                        
-                        <tr class='{{$classes}} cursor' id="option{{$option->id}}">
-                            <td> {{$key + 1}} </td>
-                            <td> {{$option->name}} </td>
-                            <td> {{$option->description}} </td>
-                            <td> {{round($stats[$key][0], 3)}} </td>
-                            <td> {{round($stats[$key][1], 3)}} </td>
-                        </tr>
+                        @if($option->result != '')
+                            <?php $classes = '' ?>
+                            @if($stats[$key][0] >= 2) <?php $classes = 'grayed' ?> 
+                                <input hidden id="option{{$option->id}}" name="option[{{$option->id}}]" type='radio' value='0' checked='checked'>
+                            @else
+                                <input hidden id="option{{$option->id}}" name="option[{{$option->id}}]" type='radio' value='1' checked='checked'>
+                            
+                            @endif
+                            @if($stats[$key][1] >= 1) <?php $classes = 'grayed highlighted' ?> @endif
+                            
+                            <tr class='{{$classes}} cursor' id="option{{$option->id}}">
+                                <td> {{$key + 1}} </td>
+                                <td> {{$option->name}} </td>
+                                <td> {{$option->description}} </td>
+                                <td> {{round($stats[$key][0], 3)}} </td>
+                                <td> {{round($stats[$key][1], 3)}} </td>
+                            </tr>
+                        @endif  
                     @endforeach 
                 @endif    
             </table>
@@ -62,26 +64,28 @@
                         <th> Top Options </th>
                         <th> Option Name </th>
                         <th> Option Description </th>
-                        <th> Option Percentage </th>
+                        <th> Option Points </th>
                         <th> Option Standard Deviation </th>
                     </thead>
                     <tbody>
                     @if($sorted_options)
                         @foreach($sorted_options as $key => $option)
-                            <?php $classes = '' ?>
-                            @if($elimination_votes < $key + 1 || !$option->enabled) <?php $classes = 'grayed' ?> 
-                                 <input hidden id="option{{$option->id}}" name="option[{{$option->id}}]" type='radio' value='0' checked='checked'>
-                            @else
-                                <input hidden id="option{{$option->id}}" name="option[{{$option->id}}]" type='radio' type='radio' value='1' checked='checked'>
+                            @if($option->result != '')
+                                <?php $classes = '' ?>
+                                @if($elimination_votes < $key + 1 || !$option->enabled) <?php $classes = 'grayed' ?> 
+                                     <input hidden id="option{{$option->id}}" name="option[{{$option->id}}]" type='radio' value='0' checked='checked'>
+                                @else
+                                    <input hidden id="option{{$option->id}}" name="option[{{$option->id}}]" type='radio' type='radio' value='1' checked='checked'>
+                                @endif
+                                @if($stats[$key][1] >= 1) <?php $classes = 'grayed highlighted' ?> @endif
+                                <tr class = '{{$classes}} cursor' id="option{{$option->id}}">
+                                    <td> {{$key + 1}} </td>
+                                    <td> {{$option->name}} </td>
+                                    <td> {{$option->description}} </td>
+                                    <td> {{round($percentage[$key], 3)}} </td>
+                                    <td> {{round($stats[$key][1], 3)}} </td>
+                                </tr>
                             @endif
-                            @if($stats[$key][1] >= 1) <?php $classes = 'grayed highlighted' ?> @endif
-                            <tr class = '{{$classes}} cursor' id="option{{$option->id}}">
-                                <td> {{$key + 1}} </td>
-                                <td> {{$option->name}} </td>
-                                <td> {{$option->description}} </td>
-                                <td> {{round($percentage[$key], 3)}} </td>
-                                <td> {{round($stats[$key][1], 3)}} </td>
-                            </tr>
                         @endforeach 
                     @endif  
                     </tbody>  

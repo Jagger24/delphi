@@ -30,8 +30,8 @@ class SessionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-        	'userId'=> 'required|integer',
-        	'joinCode' => 'required:min:5|max:10'
+            'userId'=> 'required|integer',
+            'joinCode' => 'required:min:5|max:10'
         ]);
 
         //check if the code already exists
@@ -39,21 +39,21 @@ class SessionController extends Controller
         $errorMessage = '';
 
         if($codeAlreadyExists > 0){
-        	$errorMessage = "1";
+            $errorMessage = "1";
         }else{
-	        $session = new Session();
+            $session = new Session();
 
-	        $session->uid = $request->request->get("userId");
-	        $session->code = $request->request->get("joinCode");
+            $session->uid = $request->request->get("userId");
+            $session->code = $request->request->get("joinCode");
 
-	        if($session->save()){
-	        	return redirect()->action('HomeController@index');
-	        }else{
-	        	$errorMessage="2";
-	        }
-    	}
+            if($session->save()){
+                return redirect()->action('HomeController@index');
+            }else{
+                $errorMessage="2";
+            }
+        }
 
-    	return redirect()->action('HomeController@index',['errorMessage'=>$errorMessage]);
+        return redirect()->action('HomeController@index',['errorMessage'=>$errorMessage]);
     }
 
     public function createListWithOptions(Request $request){
@@ -126,11 +126,13 @@ class SessionController extends Controller
             }
             $options = Option::getOptionsByListId($list->id);
 
+            $elimination_count = $list->voted * (intval(count(Option::getEnabledOptionsByListId($list->id))));
+            
             $option_array = [];
             $stats = [];
             $percentage = [];
-            $elimination_votes = $list->voted * (intval(count($options) * .7));
-            $elimination_count = (intval(count($options) * .7));
+            
+            $elimination_count = ($elimination_count * .7);
             // number of students that are voting (used for calculating mean)
             // note that getStudentsBy... returns a Collection, so we have to use [0]
             $num_students = Group::getStudentsByCodeAndId($code, $lid)[0];
@@ -149,7 +151,7 @@ class SessionController extends Controller
                 for ($j = 0; $j < count($arr); $j++) {
                     $sum += intval($arr[$j]);
                 }
-                $percentage[$i] = ($elimination_votes > 0) ? floatval($sum) / floatval($elimination_votes) * 100 : 0; 
+                $percentage[$i] =  floatval($sum) ; 
 
                 $stats[$i] = [$mean, $std_dev];
             }
@@ -162,11 +164,10 @@ class SessionController extends Controller
             }else{
                 usort($option_array, array($this,"cmpResultElim"));
                 usort($stats, array($this, "sortByPercentage"));
-                usort($percentage, array($this, "sortByPercentage"));
+                rsort($percentage);
             }
 
             $host = $request->getHttpHost();
-
             return view('statistics', ['sorted_options'=>$option_array, 'group'=>$list, 'stats'=>$stats, 'percentage'=>$percentage, 'elimination_votes'=>$elimination_count, 'owner'=>$owner, 'host'=>$host]);
 
         }else{
@@ -180,7 +181,7 @@ class SessionController extends Controller
         $list->active = true;
         $list->prioritization = ($params['voting_method']) ? true :false;
         $list->method = ($params['voting_style']) ? true : false;
-        $list->students = $params['students'];
+        $list->students = ($params['students']);
         $list->voted = 0;
         $list->save();
         Option::resetResultField($lid);

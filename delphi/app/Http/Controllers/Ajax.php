@@ -9,32 +9,32 @@ class Ajax extends Controller
 {
     public function studentCount(Request $request){
 
-    	$list = Group::find($request->get('listId'));
+        $list = Group::find($request->get('listId'));
 
-    	$voted = ($list->voted) ? $list->voted : 0;
+        $voted = ($list->voted) ? $list->voted : 0;
 
-    	$response = array(
-			'status' => 'success',
-			'students' => $voted
-    	);
+        $response = array(
+            'status' => 'success',
+            'students' => $voted
+        );
 
 
-    	return response()->json($response);
+        return response()->json($response);
     }
 
     public function statCheck(Request $request){
 
-    	$list = Group::find($request->get('listId'));
-    	$complete = ($list->voted >= $list->students) ? true: false;
+        $list = Group::find($request->get('listId'));
+        $complete = ($list->voted >= $list->students) ? true: false;
         if($list->active == false){
             $complete = true;
         }
-    	$response = array(
-			'status' => 'success',
-			'complete' => $complete
-    	);
+        $response = array(
+            'status' => 'success',
+            'complete' => $complete
+        );
 
-    	return response()->json($response);
+        return response()->json($response);
     }
 
     public function liveCheck(Request $request){

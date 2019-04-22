@@ -58,7 +58,7 @@ Route::delete('/{sessionCode}/{groupId}/{name}/deleteOption', 'HomeController@de
 
 
 Route::get('group/{sessionCode}/{id}','SessionController@statistics');
-Route::post('group/{sessionCode}/{id}','SessionController@statisticsPost');
+Route::post('group/{sessionCode}/{id}/stats-post','SessionController@statisticsPost');
 Route::get('group/{sessioncode}/{id}/voting','SessionController@votingPage');
 Route::post('group/{sessioncode}/{id}/voting', 'SessionController@saveVote')->name('saveName');
 // Route::get('group/{sessioncode}/{id}/waiting','SessionController@waiting');
